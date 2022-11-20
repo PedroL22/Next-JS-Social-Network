@@ -45,6 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  posts         Posts[]
 }
 
 model VerificationToken {
@@ -53,4 +54,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Posts {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [email], references: [email])
+  email     String?
 }
