@@ -5,6 +5,7 @@ import { prisma } from "../lib/prisma";
 import Head from "next/head";
 import Image from "next/image";
 import { Posts } from "@prisma/client";
+import Post from "../components/Post";
 
 interface PostsProps {
   posts: Posts[];
@@ -34,7 +35,7 @@ export default function Home({ posts }: PostsProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className="bg-gray-200 h-screen">
         <div className="h-16 text-transparent">a</div>
         <div>
           <h1>Posts</h1>
@@ -51,7 +52,13 @@ export default function Home({ posts }: PostsProps) {
         <div className="mt-24">
           {posts.map((item) => (
             <div key={item.id}>
-              <h1>{item.text}</h1>
+              <Post
+                ownerEmail={item.email}
+                ownerName={item.ownerName}
+                ownerImage={item.ownerImage}
+                text={item.text}
+                date={item.createdAt}
+              />
             </div>
           ))}
         </div>
@@ -61,13 +68,17 @@ export default function Home({ posts }: PostsProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const posts = await prisma.posts.findMany();
+  const posts = await prisma.posts.findMany({
+    include: { User: true },
+  });
 
   const data = posts.map((post) => {
     return {
       id: post.id,
       text: post.text,
       date: post.createdAt.toISOString(),
+      ownerName: post.User?.name,
+      ownerImage: post.User?.image,
     };
   });
 
