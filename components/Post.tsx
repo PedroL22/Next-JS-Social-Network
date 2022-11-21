@@ -75,6 +75,7 @@ export default function Post({
               onChange={(e) => setPostText(e.target.value)}
               className="bg-gray-white pl-4 xl:pr-44 pr-36 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
               placeholder="Write something..."
+              defaultValue={text}
             />
             <button
               type="submit"
