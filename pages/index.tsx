@@ -1,9 +1,8 @@
 import React, { FormEvent, useState } from "react";
+import Head from "next/head";
 import { useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { prisma } from "../lib/prisma";
-import Head from "next/head";
-import Image from "next/image";
 import { Posts } from "@prisma/client";
 import Post from "../components/Post";
 
@@ -13,7 +12,7 @@ interface PostsProps {
 
 export default function Home({ posts }: PostsProps) {
   const { data: session } = useSession({ required: true });
-  const [newPost, setNewPost] = useState();
+  const [newPost, setNewPost] = useState("");
 
   async function handleCreatePost(event: FormEvent) {
     event.preventDefault();
@@ -25,6 +24,8 @@ export default function Home({ posts }: PostsProps) {
         "Content-Type": "application/json",
       },
     });
+
+    setNewPost("");
   }
 
   return (
@@ -35,34 +36,42 @@ export default function Home({ posts }: PostsProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-gray-200 h-screen">
-        <div className="h-16 text-transparent">a</div>
-        <div>
-          <h1>Posts</h1>
-          <form onSubmit={handleCreatePost}>
-            <input
-              type="text"
-              value={newPost}
-              onChange={(e) => setNewPost(e.target.value)}
-              className="bg-gray-300"
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-        <div className="mt-24">
-          {posts.map((item) => (
-            <div key={item.id}>
-              <Post
-                ownerEmail={item.email}
-                ownerName={item.ownerName}
-                ownerImage={item.ownerImage}
-                text={item.text}
-                date={item.createdAt}
+      <div className="bg-gray-200 min-h-screen">
+        <main className="pt-24 mx-auto max-w-7xl">
+          <div className="flex">
+            <form onSubmit={handleCreatePost} className="mx-auto">
+              <input
+                type="text"
+                value={newPost}
+                onChange={(e) => setNewPost(e.target.value)}
+                className="bg-gray-white pl-4 pr-44 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
+                placeholder="Write something..."
               />
-            </div>
-          ))}
-        </div>
-      </main>
+              <button
+                type="submit"
+                className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+              >
+                Post
+              </button>
+            </form>
+          </div>
+          <div className="">
+            {posts
+              .sort((a, b) => (a.date < b.date ? 1 : -1))
+              .map((item) => (
+                <div key={item.id}>
+                  <Post
+                    ownerEmail={item.email}
+                    ownerName={item.ownerName}
+                    ownerImage={item.ownerImage}
+                    text={item.text}
+                    date={item.date}
+                  />
+                </div>
+              ))}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

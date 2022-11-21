@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function NavBar() {
@@ -6,7 +7,7 @@ export default function NavBar() {
 
   if (session) {
     return (
-      <nav className="fixed h-16 bg-blue-700 mb-10 w-screen">
+      <nav className="fixed h-16 bg-blue-700 w-screen">
         <div className="flex mx-auto max-w-7xl justify-between p-5 w-screen">
           <Link href="/">
             <h1 className="text-white font-medium cursor-pointer hover:text-gray-200 transition-all ease-in duration-75">
@@ -14,24 +15,27 @@ export default function NavBar() {
             </h1>
           </Link>
           <div className="flex">
-            <Link href="account">
-              <img
-                src={session.user.image}
-                alt="user profile picture"
-                className="w-12 rounded-full my-auto mx-2 -mt-3 cursor-pointer"
-              />
-            </Link>
-            <Link href="account">
-              <p className="xl:flex hidden text-white font-medium cursor-pointer my-auto mx-2 -mt-0 hover:text-gray-200 transition-all ease-in duration-75">
-                {session.user.name}
-              </p>
-            </Link>
-            <button
-              onClick={signOut}
-              className="text-white font-medium cursor-pointer my-auto mx-2 -mt-0 hover:text-gray-200 transition-all ease-in duration-75"
-            >
-              Logout
-            </button>
+            <div className="dropdown dropdown-end -mt-3">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="rounded-full">
+                  <Image src={session.user.image} width={48} height={48} />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link href="account" className="justify-between">
+                    {session.user.name}
+                  </Link>
+                </li>
+
+                <li>
+                  <a onClick={signOut}>Logout</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </nav>
