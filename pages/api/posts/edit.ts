@@ -3,12 +3,12 @@ import { prisma } from "../../../lib/prisma";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { email } = req.body;
+  const { id } = req.body;
   const { text } = req.body;
 
   await prisma.posts.update({
     where: {
-      email: email,
+      id: id,
     },
     data: {
       text: text,

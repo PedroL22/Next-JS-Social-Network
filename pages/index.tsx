@@ -61,6 +61,7 @@ export default function Home({ posts }: PostsProps) {
               .map((item) => (
                 <div key={item.id}>
                   <Post
+                    id={item.id}
                     ownerEmail={item.ownerEmail}
                     ownerName={item.ownerName}
                     ownerImage={item.ownerImage}

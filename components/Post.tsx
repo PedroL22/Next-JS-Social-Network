@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import moment from "moment";
@@ -6,6 +6,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
 
 export default function Post({
+  id,
   text,
   date,
   ownerName,
@@ -15,17 +16,20 @@ export default function Post({
   const { data: session } = useSession({ required: true });
   const dateString = moment(date).format("MMMM Do YYYY, h:mm a");
   const [postText, setPostText] = useState();
+  const [isEditing, setIsEditing] = useState(false);
 
   async function handleEditPost(event: FormEvent) {
     event.preventDefault();
 
     await fetch("http://localhost:3000/api/posts/edit", {
       method: "POST",
-      body: JSON.stringify({ text: postText, email: session.user.email }),
+      body: JSON.stringify({ text: postText, id: id }),
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    setIsEditing(false);
   }
 
   return (
@@ -38,6 +42,7 @@ export default function Post({
               width={48}
               height={48}
               className="rounded-full"
+              alt="profile picture"
             />
 
             <div>
@@ -48,8 +53,11 @@ export default function Post({
             </div>
             {ownerEmail === session?.user?.email ? (
               <div className="flex">
-                <MdModeEditOutline className="ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in" />
-                <BsFillTrashFill className="ml-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in" />
+                <MdModeEditOutline
+                  className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                  onClick={() => setIsEditing(true)}
+                />
+                <BsFillTrashFill className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in" />
               </div>
             ) : (
               <></>
@@ -57,7 +65,25 @@ export default function Post({
           </div>
         </div>
 
-        <p className="my-5"> {text}</p>
+        {isEditing === false ? (
+          <p className="my-5"> {text}</p>
+        ) : (
+          <form onSubmit={handleEditPost} className="mx-auto">
+            <input
+              type="text"
+              value={postText}
+              onChange={(e) => setPostText(e.target.value)}
+              className="bg-gray-white pl-4 xl:pr-44 pr-36 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
+              placeholder="Write something..."
+            />
+            <button
+              type="submit"
+              className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+            >
+              Post
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

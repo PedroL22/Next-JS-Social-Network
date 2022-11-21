@@ -18,7 +18,12 @@ export default function NavBar() {
             <div className="dropdown dropdown-end -mt-3">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="rounded-full">
-                  <Image src={session.user.image} width={48} height={48} />
+                  <Image
+                    src={session.user.image}
+                    width={48}
+                    height={48}
+                    alt="profile picture"
+                  />
                 </div>
               </label>
               <ul
