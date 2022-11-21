@@ -62,6 +62,7 @@ export default function Home({ posts }: PostsProps) {
                 <div key={item.id}>
                   <Post
                     id={item.id}
+                    ownerId={item.ownerId}
                     ownerEmail={item.ownerEmail}
                     ownerName={item.ownerName}
                     ownerImage={item.ownerImage}
@@ -87,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       id: post.id,
       text: post.text,
       date: post.createdAt.toISOString(),
+      ownerId: post.User?.id,
       ownerName: post.User?.name,
       ownerImage: post.User?.image,
       ownerEmail: post.email,

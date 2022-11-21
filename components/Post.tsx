@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import moment from "moment";
 import { MdModeEditOutline } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -9,6 +10,7 @@ export default function Post({
   id,
   text,
   date,
+  ownerId,
   ownerName,
   ownerImage,
   ownerEmail,
@@ -58,7 +60,9 @@ export default function Post({
             />
 
             <div>
-              <h1 className="ml-3 font-medium">{ownerName}</h1>
+              <Link href={"accounts/" + ownerId}>
+                <h1 className="ml-3 font-medium">{ownerName}</h1>
+              </Link>
               <p className="ml-3 text-gray-500 whitespace-nowrap">
                 {dateString}
               </p>
