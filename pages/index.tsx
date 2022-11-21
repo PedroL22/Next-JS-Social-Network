@@ -37,14 +37,14 @@ export default function Home({ posts }: PostsProps) {
       </Head>
 
       <div className="bg-gray-200 min-h-screen">
-        <main className="pt-24 mx-auto max-w-7xl">
-          <div className="flex">
+        <main className="pt-20 mx-auto max-w-7xl">
+          <div className="flex px-4">
             <form onSubmit={handleCreatePost} className="mx-auto">
               <input
                 type="text"
                 value={newPost}
                 onChange={(e) => setNewPost(e.target.value)}
-                className="bg-gray-white pl-4 pr-44 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
+                className="bg-gray-white pl-4 xl:pr-44 pr-36 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
                 placeholder="Write something..."
               />
               <button
@@ -61,7 +61,7 @@ export default function Home({ posts }: PostsProps) {
               .map((item) => (
                 <div key={item.id}>
                   <Post
-                    ownerEmail={item.email}
+                    ownerEmail={item.ownerEmail}
                     ownerName={item.ownerName}
                     ownerImage={item.ownerImage}
                     text={item.text}
@@ -88,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       date: post.createdAt.toISOString(),
       ownerName: post.User?.name,
       ownerImage: post.User?.image,
+      ownerEmail: post.email,
     };
   });
 
