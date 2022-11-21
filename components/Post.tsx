@@ -32,6 +32,18 @@ export default function Post({
     setIsEditing(false);
   }
 
+  async function handleDeletePost() {
+    await fetch("http://localhost:3000/api/posts/delete", {
+      method: "POST",
+      body: JSON.stringify({ id: id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    setIsEditing(false);
+  }
+
   return (
     <div className="flex px-4">
       <div className="mx-auto bg-white h-auto w-96 my-4 rounded-sm shadow-md p-5">
@@ -57,7 +69,10 @@ export default function Post({
                   className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
                   onClick={() => setIsEditing(true)}
                 />
-                <BsFillTrashFill className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in" />
+                <BsFillTrashFill
+                  className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                  onClick={handleDeletePost}
+                />
               </div>
             ) : (
               <></>
