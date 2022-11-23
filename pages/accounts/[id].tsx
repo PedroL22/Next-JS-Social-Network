@@ -8,13 +8,13 @@ export const getStaticPaths = async () => {
   const fetch = await api.get("/api/users");
   const res = await fetch.data;
 
-  const paths = res?.users?.map((item: any) => {
+  const paths = res?.map((item: any) => {
     return {
-      params: { id: String(item.id) },
+      params: { id: String(item?.id) },
     };
   });
 
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps = async (context: any) => {
