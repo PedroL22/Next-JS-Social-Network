@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import api from "../../lib/axios";
 
 export const getStaticPaths = async () => {
-  const res = await api.get("/api/users");
+  const res = await api.get("api/users");
   const data = res.data;
 
   const paths = data.users.map((item: any) => {
@@ -19,7 +19,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context: any) => {
   const id = context.params.id;
-  const res = await api.get("/api/users/" + id);
+  const res = await api.get("api/users/" + id);
   const data = res.data;
 
   return {
