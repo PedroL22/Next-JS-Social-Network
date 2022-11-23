@@ -51,7 +51,7 @@ export default function NavBar() {
         <div className="flex mx-auto max-w-7xl justify-between p-5 w-screen">
           <Link href="/">
             <h1 className="text-white font-medium cursor-pointer hover:text-gray-200 transition-all ease-in duration-75">
-              The News Website
+              Next JS Social Network
             </h1>
           </Link>
           <button

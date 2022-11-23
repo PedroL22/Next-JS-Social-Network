@@ -2,10 +2,11 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import api from "../../lib/axios";
 
 export const getStaticPaths = async () => {
-  const res = await fetch("http://localhost:3000/api/users");
-  const data = await res.json();
+  const res = await api.get("/api/users");
+  const data = res.data;
 
   const paths = data.map((item) => {
     return {
@@ -18,8 +19,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id;
-  const res = await fetch("http://localhost:3000/api/users/" + id);
-  const data = await res.json();
+  const res = await api.get("/api/users/" + id);
+  const data = res.data;
 
   return {
     props: {

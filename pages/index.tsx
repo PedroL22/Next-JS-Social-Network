@@ -5,6 +5,7 @@ import { GetServerSideProps } from "next";
 import { prisma } from "../lib/prisma";
 import { Posts } from "@prisma/client";
 import Post from "../components/Post";
+import api from "../lib/axios";
 
 interface PostsProps {
   posts: Posts[];
@@ -17,12 +18,9 @@ export default function Home({ posts }: PostsProps) {
   async function handleCreatePost(event: FormEvent) {
     event.preventDefault();
 
-    await fetch("http://localhost:3000/api/posts/create", {
-      method: "POST",
-      body: JSON.stringify({ text: newPost, email: session.user.email }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    await api.post("/api/posts/create", {
+      text: newPost,
+      email: session.user.email,
     });
 
     setNewPost("");

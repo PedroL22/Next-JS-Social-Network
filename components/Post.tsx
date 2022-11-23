@@ -5,6 +5,7 @@ import Link from "next/link";
 import moment from "moment";
 import { MdModeEditOutline } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
+import api from "../lib/axios";
 
 export default function Post({
   id,
@@ -23,24 +24,21 @@ export default function Post({
   async function handleEditPost(event: FormEvent) {
     event.preventDefault();
 
-    await fetch("http://localhost:3000/api/posts/edit", {
-      method: "POST",
-      body: JSON.stringify({ text: postText, id: id }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    setIsEditing(false);
+    try {
+      await api.post("/api/posts/edit", {
+        text: postText,
+        id: id,
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsEditing(false);
+    }
   }
 
   async function handleDeletePost() {
-    await fetch("http://localhost:3000/api/posts/delete", {
-      method: "POST",
-      body: JSON.stringify({ id: id }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    await api.post("/api/posts/delete", {
+      id: id,
     });
 
     setIsEditing(false);
