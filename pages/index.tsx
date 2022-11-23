@@ -8,7 +8,7 @@ import Post from "../components/Post";
 import api from "../lib/axios";
 
 export default function Home({ posts }: any) {
-  const { data: session } = useSession({ required: true });
+  const { data: session }: any = useSession({ required: true });
   const [newPost, setNewPost] = useState("");
 
   async function handleCreatePost(event: FormEvent) {

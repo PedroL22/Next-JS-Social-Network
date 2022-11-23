@@ -3,7 +3,7 @@ import { prisma } from "../../../lib/prisma";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+  const { id }: any = req.query;
 
   const user = await prisma.user.findUnique({
     where: {

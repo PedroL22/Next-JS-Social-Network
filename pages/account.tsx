@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 
 export default function account() {
-  const { data: session } = useSession({ required: true });
+  const { data: session }: any = useSession({ required: true });
 
   if (session) {
     return (
