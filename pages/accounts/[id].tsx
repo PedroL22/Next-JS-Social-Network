@@ -8,7 +8,7 @@ export const getStaticPaths = async () => {
   const res = await api.get("/api/users");
   const data = res.data;
 
-  const paths = data.map((item) => {
+  const paths = data.map((item: any) => {
     return {
       params: { id: String(item.id) },
     };
@@ -17,7 +17,7 @@ export const getStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: any) => {
   const id = context.params.id;
   const res = await api.get("/api/users/" + id);
   const data = res.data;
@@ -30,7 +30,7 @@ export const getStaticProps = async (context) => {
   };
 };
 
-export default function Details({ user }) {
+export default function Details({ user }: any) {
   const { data: session } = useSession({ required: true });
 
   if (session) {

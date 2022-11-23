@@ -15,7 +15,7 @@ export default function Post({
   ownerName,
   ownerImage,
   ownerEmail,
-}) {
+}: any) {
   const { data: session } = useSession({ required: true });
   const dateString = moment(date).format("MMMM Do YYYY, h:mm a");
   const [postText, setPostText] = useState();

@@ -7,11 +7,7 @@ import { Posts } from "@prisma/client";
 import Post from "../components/Post";
 import api from "../lib/axios";
 
-interface PostsProps {
-  posts: Posts[];
-}
-
-export default function Home({ posts }: PostsProps) {
+export default function Home({ posts }: any) {
   const { data: session } = useSession({ required: true });
   const [newPost, setNewPost] = useState("");
 
@@ -53,10 +49,10 @@ export default function Home({ posts }: PostsProps) {
               </button>
             </form>
           </div>
-          <div className="">
+          <div>
             {posts
-              .sort((a, b) => (a.date < b.date ? 1 : -1))
-              .map((item) => (
+              .sort((a: any, b: any) => (a.date < b.date ? 1 : -1))
+              .map((item: any) => (
                 <div key={item.id}>
                   <Post
                     id={item.id}
@@ -81,7 +77,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     include: { User: true },
   });
 
-  const data = posts.map((post) => {
+  const data: any = posts.map((post) => {
     return {
       id: post.id,
       text: post.text,
