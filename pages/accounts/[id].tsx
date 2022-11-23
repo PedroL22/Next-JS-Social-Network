@@ -8,7 +8,7 @@ export const getStaticPaths = async () => {
   const res = await api.get("/api/users");
   const data = res.data;
 
-  const paths = data.map((item: any) => {
+  const paths = data.users.map((item: any) => {
     return {
       params: { id: String(item.id) },
     };
