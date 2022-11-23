@@ -5,5 +5,5 @@ import { prisma } from "../../lib/prisma";
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const users = await prisma.user.findMany({});
 
-  return res.status(201).json({ users });
+  return res.status(201).json( users );
 }
