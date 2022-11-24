@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { prisma } from "../lib/prisma";
-import { Posts } from "@prisma/client";
 import Post from "../components/Post";
 import api from "../lib/axios";
 
@@ -77,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     include: { User: true },
   });
 
-  const data: any = posts.map((post) => {
+  const data: any = posts.map((post: any) => {
     return {
       id: post.id,
       text: post.text,

@@ -1,9 +1,14 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import Post from "../components/Post";
+import { prisma } from "../lib/prisma";
+import { GetServerSideProps } from "next";
 
-export default function account() {
+export default function Account({ posts }: any) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data: session }: any = useSession({ required: true });
 
   if (session) {
@@ -25,7 +30,7 @@ export default function account() {
               alt="user profile picture"
               width={100}
               height={100}
-              className="w-36 xl:mx-0 mx-auto rounded-lg"
+              className="w-36 h-36 xl:mx-0 mx-auto rounded-lg"
             />
             <div>
               <h1 className="xl:ml-10 mt-2 text-center font-medium text-3xl text-gray-600">
@@ -39,6 +44,26 @@ export default function account() {
                   Back
                 </button>
               </Link>
+            </div>
+            <div>
+              {posts
+                .filter((item: any) =>
+                  item.ownerEmail.includes(session.user.email)
+                )
+                .sort((a: any, b: any) => (a.date < b.date ? 1 : -1))
+                .map((item: any) => (
+                  <div key={item.id}>
+                    <Post
+                      id={item.id}
+                      ownerId={item.ownerId}
+                      ownerEmail={item.ownerEmail}
+                      ownerName={item.ownerName}
+                      ownerImage={item.ownerImage}
+                      text={item.text}
+                      date={item.date}
+                    />
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -65,3 +90,27 @@ export default function account() {
     );
   }
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const posts = await prisma.posts.findMany({
+    include: { User: true },
+  });
+
+  const data: any = posts.map((post: any) => {
+    return {
+      id: post.id,
+      text: post.text,
+      date: post.createdAt.toISOString(),
+      ownerId: post.User?.id,
+      ownerName: post.User?.name,
+      ownerImage: post.User?.image,
+      ownerEmail: post.email,
+    };
+  });
+
+  return {
+    props: {
+      posts: data,
+    },
+  };
+};

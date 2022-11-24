@@ -9,6 +9,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     where: {
       id: id,
     },
+    include: {
+      posts: true,
+    },
   });
 
   return res.status(201).json({ user });
