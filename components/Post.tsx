@@ -25,8 +25,10 @@ export default function Post({
   const commentDateString = moment(commentDate.toString()).format(
     "MMMM Do YYYY, h:mm a"
   );
-  const [postText, setPostText] = useState();
-  const [isEditing, setIsEditing] = useState(false);
+  const [postText, setPostText] = useState("");
+  const [commentTextState, setCommentTextState] = useState("");
+  const [isEditingPost, setIsEditingPost] = useState(false);
+  const [isEditingComment, setIsEditingComment] = useState(false);
 
   async function handleEditPost(event: FormEvent) {
     event.preventDefault();
@@ -39,7 +41,7 @@ export default function Post({
     } catch (e) {
       console.error(e);
     } finally {
-      setIsEditing(false);
+      setIsEditingPost(false);
     }
   }
 
@@ -48,8 +50,22 @@ export default function Post({
       id: id,
     });
 
-    setIsEditing(false);
+    setIsEditingPost(false);
   }
+
+  async function handleCreateComment(event: FormEvent) {
+    event.preventDefault();
+
+    await api.post("/api/comments/create", {
+      postsId: id,
+      text: commentTextState,
+      email: session?.user?.email,
+    });
+
+    setIsEditingComment(false);
+  }
+
+  console.log(commentText);
 
   return (
     <div className="flex px-4">
@@ -74,7 +90,7 @@ export default function Post({
               <div className="flex -ml-6">
                 <MdModeEditOutline
                   className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
-                  onClick={() => setIsEditing(true)}
+                  onClick={() => setIsEditingPost(true)}
                 />
                 <BsFillTrashFill
                   className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
@@ -87,7 +103,7 @@ export default function Post({
           </div>
         </div>
 
-        {isEditing === false ? (
+        {isEditingPost === false ? (
           <h1 className="my-5"> {text}</h1>
         ) : (
           <form onSubmit={handleEditPost} className="mx-auto">
@@ -126,7 +142,28 @@ export default function Post({
             </div>
           </div>
 
-          <h3>{commentText}</h3>
+          {isEditingComment === false ? (
+            <>
+              <h3>{commentText}</h3>
+              <button onClick={() => setIsEditingComment(true)}>Comment</button>
+            </>
+          ) : (
+            <form onSubmit={handleCreateComment} className="mx-auto">
+              <input
+                type="text"
+                value={commentTextState}
+                onChange={(e: any) => setCommentTextState(e.target.value)}
+                className="bg-gray-white pl-4 xl:pr-44 pr-36 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
+                placeholder="Comment something..."
+              />
+              <button
+                type="submit"
+                className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+              >
+                Comment
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
