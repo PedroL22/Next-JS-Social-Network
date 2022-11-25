@@ -5,7 +5,17 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: [
+          "Open Sans",
+          "Roboto",
+          "sans-serif",
+          "ui-sans-serif",
+          "system-ui",
+        ],
+      },
+    },
   },
   plugins: [require("daisyui")],
 };

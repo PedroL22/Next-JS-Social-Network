@@ -38,14 +38,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   posts         Posts[]
+  Comments      Comments[]
 }
 
 model VerificationToken {
@@ -57,9 +58,20 @@ model VerificationToken {
 }
 
 model Posts {
+  id        String     @id @default(cuid())
+  text      String
+  createdAt DateTime   @default(now())
+  User      User       @relation(fields: [email], references: [email], onDelete: Cascade)
+  email     String
+  comments  Comments[]
+}
+
+model Comments {
   id        String   @id @default(cuid())
   text      String
   createdAt DateTime @default(now())
   User      User     @relation(fields: [email], references: [email], onDelete: Cascade)
   email     String
+  Posts     Posts    @relation(fields: [postsId], references: [id], onDelete: Cascade)
+  postsId   String
 }

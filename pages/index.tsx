@@ -61,6 +61,10 @@ export default function Home({ posts }: any) {
                     ownerImage={item.ownerImage}
                     text={item.text}
                     date={item.date}
+                    commentOwnerName={item.commentOwnerName}
+                    commentOwnerImage={item.commentOwnerImage}
+                    commentDate={item.commentDate}
+                    commentText={item.commentText}
                   />
                 </div>
               ))}
@@ -73,10 +77,28 @@ export default function Home({ posts }: any) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await prisma.posts.findMany({
-    include: { User: true },
+    include: {
+      User: true,
+      comments: {
+        select: {
+          id: true,
+          email: true,
+          text: true,
+          createdAt: true,
+          User: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              image: true,
+            },
+          },
+        },
+      },
+    },
   });
 
-  const data: any = posts.map((post: any) => {
+  const postsData: any = posts.map((post: any) => {
     return {
       id: post.id,
       text: post.text,
@@ -85,12 +107,25 @@ export const getServerSideProps: GetServerSideProps = async () => {
       ownerName: post.User?.name,
       ownerImage: post.User?.image,
       ownerEmail: post.email,
+
+      commentOwnerName: post.comments.map((i: any) => {
+        return i.User?.name;
+      }),
+      commentOwnerImage: post.comments.map((i: any) => {
+        return i.User?.image;
+      }),
+      commentDate: post.comments.map((i: any) => {
+        return i.createdAt.toISOString();
+      }),
+      commentText: post.comments.map((i: any) => {
+        return i.text;
+      }),
     };
   });
 
   return {
     props: {
-      posts: data,
+      posts: postsData,
     },
   };
 };
