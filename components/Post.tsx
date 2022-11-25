@@ -71,7 +71,7 @@ export default function Post({
               <p className="ml-3 text-gray-500 whitespace-nowrap">{postDate}</p>
             </div>
             {ownerEmail === session?.user?.email ? (
-              <div className="flex">
+              <div className="flex -ml-6">
                 <MdModeEditOutline
                   className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
                   onClick={() => setIsEditing(true)}

@@ -33,12 +33,11 @@ export default function Home({ posts }: any) {
         <main className="pt-20 mx-auto max-w-7xl">
           <div className="flex px-4">
             <form onSubmit={handleCreatePost} className="mx-auto">
-              <input
-                type="text"
+              <textarea
                 value={newPost}
                 onChange={(e) => setNewPost(e.target.value)}
-                className="bg-gray-white pl-4 xl:pr-44 pr-36 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
-                placeholder="Write something..."
+                className="bg-gray-white h-[15vh] xl:h-32 sm:w-96 md:w-96 w-[90vw] mx-auto xl:w-96 py-2 px-3 rounded-md outline-0 border focus:border-gray-400 resize-none"
+                placeholder="Post something..."
               />
               <button
                 type="submit"
