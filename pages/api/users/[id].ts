@@ -10,19 +10,20 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       id: id,
     },
     include: {
-      posts: true,
-      Comments: {
+      posts: {
         select: {
           id: true,
           email: true,
-          text: true,
           createdAt: true,
-          User: {
+          text: true,
+          comments: {
             select: {
               id: true,
+              createdAt: true,
               email: true,
-              name: true,
-              image: true,
+              postsId: true,
+              text: true,
+              User: true,
             },
           },
         },
