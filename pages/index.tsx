@@ -60,10 +60,7 @@ export default function Home({ posts }: any) {
                     ownerImage={item.ownerImage}
                     text={item.text}
                     date={item.date}
-                    commentOwnerName={item.commentOwnerName}
-                    commentOwnerImage={item.commentOwnerImage}
-                    commentDate={item.commentDate}
-                    commentText={item.commentText}
+                    comments={item.comments}
                   />
                 </div>
               ))}
@@ -107,17 +104,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
       ownerImage: post.User?.image,
       ownerEmail: post.email,
 
-      commentOwnerName: post.comments.map((i: any) => {
-        return i.User?.name;
-      }),
-      commentOwnerImage: post.comments.map((i: any) => {
-        return i.User?.image;
-      }),
-      commentDate: post.comments.map((i: any) => {
-        return i.createdAt.toISOString();
-      }),
-      commentText: post.comments.map((i: any) => {
-        return i.text;
+      comments: post.comments.map((i: any) => {
+        const dia = [
+          i.User?.name,
+          i.User?.image,
+          i.createdAt.toISOString(),
+          i.text,
+        ];
+        return dia;
       }),
     };
   });

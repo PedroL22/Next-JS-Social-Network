@@ -15,16 +15,10 @@ export default function Post({
   ownerName,
   ownerImage,
   ownerEmail,
-  commentOwnerName,
-  commentOwnerImage,
-  commentDate,
-  commentText,
+  comments,
 }: any) {
   const { data: session } = useSession({ required: true });
   const postDate = moment(date).format("MMMM Do YYYY, h:mm a");
-  const commentDateString = moment(commentDate.toString()).format(
-    "MMMM Do YYYY, h:mm a"
-  );
   const [postText, setPostText] = useState("");
   const [commentTextState, setCommentTextState] = useState("");
   const [isEditingPost, setIsEditingPost] = useState(false);
@@ -64,8 +58,6 @@ export default function Post({
 
     setIsEditingComment(false);
   }
-
-  console.log(commentText);
 
   return (
     <div className="flex px-4">
@@ -124,28 +116,39 @@ export default function Post({
           </form>
         )}
         <div>
-          <div className="flex">
-            {commentOwnerImage.length > 0 ? (
-              <Image
-                src={commentOwnerImage[0]}
-                width={40}
-                height={40}
-                className="w-[40px] h-[40px] rounded-full"
-                alt={commentOwnerName + "profile picture"}
-              />
-            ) : null}
-            <div className="block">
-              <h4 className="ml-3 font-medium">{commentOwnerName}</h4>
-              {commentDateString !== "Invalid date" ? (
-                <p className="ml-3 text-gray-500">{commentDateString}</p>
-              ) : null}
-            </div>
-          </div>
-
           {isEditingComment === false ? (
             <>
-              <h3>{commentText}</h3>
-              <button onClick={() => setIsEditingComment(true)}>Comment</button>
+              {Object.entries(comments).map(([key, value]: any) => {
+                return (
+                  <div key={key} className="my-6">
+                    <div className="flex">
+                      <Image
+                        src={value[1]}
+                        width={40}
+                        height={40}
+                        className="w-[40px] h-[40px] rounded-full"
+                        alt={value[0] + "profile picture"}
+                      />
+                      <div>
+                        <h4 className="ml-3 font-medium">{value[0]}</h4>
+                        <p className="ml-3 text-gray-500">
+                          {moment(value[2].toString()).format(
+                            "MMMM Do YYYY, h:mm a"
+                          )}
+                        </p>
+                      </div>
+                    </div>
+
+                    <h3>{value[3]}</h3>
+                  </div>
+                );
+              })}
+              <button
+                onClick={() => setIsEditingComment(true)}
+                className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+              >
+                Comment
+              </button>
             </>
           ) : (
             <form onSubmit={handleCreateComment} className="mx-auto">

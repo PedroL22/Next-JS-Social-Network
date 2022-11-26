@@ -10,9 +10,9 @@ module.exports = {
         sans: [
           "Open Sans",
           "Roboto",
-          "sans-serif",
           "ui-sans-serif",
           "system-ui",
+          "sans-serif",
         ],
       },
     },
