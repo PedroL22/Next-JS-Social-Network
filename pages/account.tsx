@@ -94,10 +94,23 @@ export default function Account({ posts }: any) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const posts: any = await prisma.posts.findMany({
-    include: {
+    select: {
       User: true,
       comments: {
-        include: { Posts: true, User: true },
+        select: {
+          id: true,
+          email: true,
+          text: true,
+          createdAt: true,
+          User: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              image: true,
+            },
+          },
+        },
       },
     },
   });
