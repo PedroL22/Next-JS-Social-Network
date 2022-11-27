@@ -97,20 +97,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     include: {
       User: true,
       comments: {
-        select: {
-          id: true,
-          email: true,
-          text: true,
-          createdAt: true,
-          User: {
-            select: {
-              id: true,
-              email: true,
-              name: true,
-              image: true,
-            },
-          },
-        },
+        include: { Posts: true, User: true },
       },
     },
   });
