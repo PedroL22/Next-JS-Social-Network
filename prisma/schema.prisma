@@ -58,12 +58,12 @@ model VerificationToken {
 }
 
 model Posts {
-  id        String     @id @default(cuid())
-  text      String
-  createdAt DateTime   @default(now())
-  User      User       @relation(fields: [email], references: [email], onDelete: Cascade)
-  email     String
-  comments  Comments[]
+  id           String     @id @default(cuid())
+  text         String
+  createdAt    DateTime   @default(now())
+  User         User       @relation(fields: [email], references: [email], onDelete: Cascade)
+  email        String
+  postComments Comments[]
 }
 
 model Comments {
