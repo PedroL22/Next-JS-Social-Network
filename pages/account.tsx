@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 // import Post from "../components/Post";
 import { prisma } from "../lib/prisma";
 import { GetServerSideProps } from "next";
+import Post from "../components/Post";
 
 export default function Account({ posts }: any) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
