@@ -101,12 +101,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
           name: true,
           image: true,
           email: true,
-          Comments: true,
         },
       },
     },
   });
-  console.log(posts);
+
+  const userComments = await prisma.comments.findMany({});
+
+  const slameu = [...posts, ...userComments];
+  console.log(slameu);
 
   const data: any = posts.map((post: any) => {
     return {
