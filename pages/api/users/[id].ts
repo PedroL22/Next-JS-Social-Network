@@ -16,7 +16,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
           email: true,
           createdAt: true,
           text: true,
-          comments: {
+          postComments: {
             select: {
               id: true,
               createdAt: true,

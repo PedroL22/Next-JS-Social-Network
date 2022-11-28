@@ -81,7 +81,7 @@ export default function Details({ data }: any) {
                       ownerImage={data?.user?.image}
                       text={item.text}
                       date={item.date}
-                      comments={item.comments.map((i: any) => {
+                      comments={item.postComments.map((i: any) => {
                         const dia = [
                           i.User?.name,
                           i.User?.image,

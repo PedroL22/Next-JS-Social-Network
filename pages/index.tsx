@@ -75,7 +75,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
-      comments: {
+      postComments: {
         select: {
           id: true,
           email: true,
@@ -104,7 +104,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       ownerImage: post.User?.image,
       ownerEmail: post.email,
 
-      comments: post.comments.map((i: any) => {
+      comments: post.postComments.map((i: any) => {
         const dia = [
           i.User?.name,
           i.User?.image,

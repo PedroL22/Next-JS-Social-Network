@@ -46,7 +46,7 @@ export default function Account({ posts }: any) {
               </Link>
             </div>
             <div>
-              {posts
+              {/* {posts
                 .filter((item: any) =>
                   item.ownerEmail.includes(session.user.email)
                 )
@@ -64,7 +64,7 @@ export default function Account({ posts }: any) {
                       comments={item.comments}
                     />
                   </div>
-                ))}
+                ))} */}
             </div>
           </div>
         </div>
@@ -96,22 +96,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
-      postComments: {
-        select: {
-          id: true,
-          email: true,
-          text: true,
-          createdAt: true,
-          User: {
-            select: {
-              id: true,
-              email: true,
-              name: true,
-              image: true,
-            },
-          },
-        },
-      },
+      postComments: true,
     },
   });
 
@@ -125,15 +110,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
       ownerImage: post.User?.image,
       ownerEmail: post.email,
 
-      comments: post.comments.map((i: any) => {
-        const dia = [
-          i.User?.name,
-          i.User?.image,
-          i.createdAt.toISOString(),
-          i.text,
-        ];
-        return dia;
-      }),
+      // comments: post.postComments.map((i: any) => {
+      //   const dia = [
+      //     i.User?.name,
+      //     i.User?.image,
+      //     i.createdAt.toISOString(),
+      //     i.text,
+      //   ];
+      //   return dia;
+      // }),
     };
   });
 
