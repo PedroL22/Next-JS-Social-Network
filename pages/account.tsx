@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import Post from "../components/Post";
+// import Post from "../components/Post";
 import { prisma } from "../lib/prisma";
 import { GetServerSideProps } from "next";
 
