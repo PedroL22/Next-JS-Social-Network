@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,7 +7,7 @@ import api from "../../lib/axios";
 import Post from "../../components/Post";
 
 export const getStaticPaths = async () => {
-  const fetch = await api.get("/api/users");
+  const fetch = await api.get("/api/users ");
   const res = await fetch.data;
 
   const paths = [res].map((item: any) => {
