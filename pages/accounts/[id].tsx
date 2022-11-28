@@ -88,7 +88,6 @@ export default function Details({ data }: any) {
                           i.createdAt,
                           i.text,
                         ];
-                        console.log(dia);
                         return dia;
                       })}
                     />
