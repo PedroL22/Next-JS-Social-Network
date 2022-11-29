@@ -6,6 +6,8 @@ import moment from "moment";
 import { MdModeEditOutline } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
+import { AiFillLike } from "react-icons/ai";
+import { BiCommentDetail } from "react-icons/bi";
 import api from "../lib/axios";
 
 export default function Post({
@@ -24,6 +26,7 @@ export default function Post({
   const [postText, setPostText] = useState("");
   const [commentTextState, setCommentTextState] = useState("");
   const [isEditingPost, setIsEditingPost] = useState(false);
+  const [isCommenting, setIsCommenting] = useState(false);
   const [isEditingComment, setIsEditingComment] = useState(false);
 
   async function handleEditPost(event: FormEvent) {
@@ -114,21 +117,33 @@ export default function Post({
             </button>
           </form>
         )}
-        <form onSubmit={handleCreateComment} className="flex mx-auto">
-          <input
-            type="text"
-            value={commentTextState}
-            onChange={(e: any) => setCommentTextState(e.target.value)}
-            className="bg-gray-white pl-4 xl:pr-24 pr-12 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
-            placeholder="Comment something..."
-          />
-          <button
-            type="submit"
-            className="my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
-          >
-            <IoMdSend className="text-gray-white hover:text-gray-200 transition-all duration-250 ease-in" />
-          </button>
-        </form>
+        <div className="flex justify-around">
+          <div className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in">
+            <AiFillLike />
+            <p className="font-medium -mt-1 ml-1">Like</p>
+          </div>
+          <div className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in">
+            <BiCommentDetail />
+            <p className="font-medium -mt-1 ml-1">Comment</p>
+          </div>
+        </div>
+        {isCommenting === true ? (
+          <form onSubmit={handleCreateComment} className="flex mx-auto">
+            <input
+              type="text"
+              value={commentTextState}
+              onChange={(e: any) => setCommentTextState(e.target.value)}
+              className="bg-gray-white pl-4 xl:pr-24 pr-12 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
+              placeholder="Comment something..."
+            />
+            <button
+              type="submit"
+              className="my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+            >
+              <IoMdSend className="text-gray-white hover:text-gray-200 transition-all duration-250 ease-in" />
+            </button>
+          </form>
+        ) : null}
         <div>
           {comments.map((comment: any) => {
             async function handleDeleteComment() {
