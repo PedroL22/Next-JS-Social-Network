@@ -166,15 +166,17 @@ export default function Post({
                       alt={comment.User.name + "profile picture"}
                     />
                     <div>
-                      <h4 className="ml-3 font-medium">{}</h4>
-                      <p className="ml-3 text-gray-500">
+                      <h4 className="ml-3 font-medium">
+                        {comment?.User?.name}
+                      </h4>
+                      <p className="ml-3 text-gray-500 whitespace-nowrap">
                         {moment(comment.createdAt.toString()).format(
                           "MMMM Do YYYY, h:mm a"
                         )}
                       </p>
                     </div>
                     {comment.email === session?.user?.email ? (
-                      <div className="flex -ml-6">
+                      <div className="flex xl:ml-10">
                         <BsFillTrashFill
                           className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
                           onClick={handleDeleteComment}
