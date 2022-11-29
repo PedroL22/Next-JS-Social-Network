@@ -7,8 +7,10 @@ import api from "../../lib/axios";
 import Post from "../../components/Post";
 
 export const getStaticPaths = async () => {
-  const fetch = await api.get("/api/users ");
+  const fetch = await api.get("/api/users");
   const res = await fetch.data;
+
+  console.log(res);
 
   const paths = [res].map((item: any) => {
     return {
@@ -49,13 +51,15 @@ export default function Details({ data }: any) {
 
         <div className="xl:flex block xl:max-w-7xl xl:mx-auto">
           <div className="xl:pt-36 pt-20 xl:ml-5 xl:flex block">
-            <Image
-              src={data?.user?.image}
-              width={100}
-              height={100}
-              alt={data?.user?.name + "profile picture"}
-              className="w-36 h-36 xl:mx-0 mx-auto rounded-lg"
-            />
+            {data?.user?.image ? (
+              <Image
+                src={data?.user?.image}
+                width={100}
+                height={100}
+                alt={`${data?.user?.name} profile picture`}
+                className="w-36 h-36 xl:mx-0 mx-auto rounded-lg"
+              />
+            ) : null}
             <div>
               <h1 className="xl:ml-10 mt-2 text-center font-medium text-3xl text-gray-600">
                 {data?.user?.name}
