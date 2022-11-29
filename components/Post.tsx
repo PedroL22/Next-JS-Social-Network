@@ -116,27 +116,35 @@ export default function Post({
         <div>
           {isEditingComment === false ? (
             <>
-              {Object.entries(comments).map(([key, value]: any) => {
+              {comments.map((comment: any) => {
+                async function handleDeleteComment() {
+                  await api.post("/api/comments/delete", {
+                    id: comment.id,
+                  });
+
+                  setIsEditingPost(false);
+                }
+
                 return (
-                  <div key={key} className="my-6">
+                  <div key={comment.id} className="my-6">
                     <div className="flex">
                       <div className="flex justify-between">
                         <Image
-                          src={value[1]}
+                          src={comment.User.image}
                           width={40}
                           height={40}
                           className="w-[40px] h-[40px] rounded-full"
-                          alt={value[0] + "profile picture"}
+                          alt={comment.User.name + "profile picture"}
                         />
                         <div>
-                          <h4 className="ml-3 font-medium">{value[0]}</h4>
+                          <h4 className="ml-3 font-medium">{}</h4>
                           <p className="ml-3 text-gray-500">
-                            {moment(value[2].toString()).format(
+                            {moment(comment.createdAt.toString()).format(
                               "MMMM Do YYYY, h:mm a"
                             )}
                           </p>
                         </div>
-                        {value[4] === session?.user?.email ? (
+                        {comment.email === session?.user?.email ? (
                           <div className="flex -ml-6">
                             <MdModeEditOutline
                               className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
@@ -151,7 +159,7 @@ export default function Post({
                       </div>
                     </div>
 
-                    <h3>{value[3]}</h3>
+                    <h3>{comment.text}</h3>
                   </div>
                 );
               })}

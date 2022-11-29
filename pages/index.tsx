@@ -81,22 +81,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
           Likes: true,
         },
       },
-      postComments: {
-        select: {
-          id: true,
-          email: true,
-          text: true,
-          createdAt: true,
-          User: {
-            select: {
-              id: true,
-              email: true,
-              name: true,
-              image: true,
-            },
-          },
-        },
-      },
+      postComments: { include: { User: true } },
     },
   });
 
@@ -110,17 +95,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       ownerImage: post.User?.image,
       ownerEmail: post.email,
 
-      comments: post.postComments.map((i: any) => {
-        const dia = [
-          i.User?.name,
-          i.User?.image,
-          i.createdAt.toISOString(),
-          i.text,
-          i.User?.email,
-          i.id,
-        ];
-        return dia;
-      }),
+      comments: post.postComments,
 
       likes: post._count.Likes,
     };
@@ -128,7 +103,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      posts: postsData,
+      posts: JSON.parse(JSON.stringify(postsData)),
     },
   };
 };
