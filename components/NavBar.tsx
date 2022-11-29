@@ -37,7 +37,7 @@ export default function NavBar() {
                 </li>
 
                 <li>
-                  <a onClick={() => signOut}>Logout</a>
+                  <a onClick={signOut as any}>Logout</a>
                 </li>
               </ul>
             </div>

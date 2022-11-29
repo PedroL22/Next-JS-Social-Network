@@ -16,6 +16,7 @@ export default function Post({
   ownerImage,
   ownerEmail,
   comments,
+  likes,
 }: any) {
   const { data: session } = useSession({ required: true });
   const postDate = moment(date).format("MMMM Do YYYY, h:mm a");
@@ -71,7 +72,6 @@ export default function Post({
               className="rounded-full"
               alt="profile picture"
             />
-
             <div>
               <Link href={"accounts/" + ownerId}>
                 <h2 className="ml-3 font-medium">{ownerName}</h2>
@@ -89,14 +89,12 @@ export default function Post({
                   onClick={handleDeletePost}
                 />
               </div>
-            ) : (
-              <></>
-            )}
+            ) : null}
           </div>
         </div>
 
         {isEditingPost === false ? (
-          <h1 className="my-5"> {text}</h1>
+          <h1 className="my-5">{text}</h1>
         ) : (
           <form onSubmit={handleEditPost} className="mx-auto">
             <input
@@ -111,7 +109,7 @@ export default function Post({
               type="submit"
               className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
             >
-              Post
+              Edit
             </button>
           </form>
         )}
@@ -122,20 +120,34 @@ export default function Post({
                 return (
                   <div key={key} className="my-6">
                     <div className="flex">
-                      <Image
-                        src={value[1]}
-                        width={40}
-                        height={40}
-                        className="w-[40px] h-[40px] rounded-full"
-                        alt={value[0] + "profile picture"}
-                      />
-                      <div>
-                        <h4 className="ml-3 font-medium">{value[0]}</h4>
-                        <p className="ml-3 text-gray-500">
-                          {moment(value[2].toString()).format(
-                            "MMMM Do YYYY, h:mm a"
-                          )}
-                        </p>
+                      <div className="flex justify-between">
+                        <Image
+                          src={value[1]}
+                          width={40}
+                          height={40}
+                          className="w-[40px] h-[40px] rounded-full"
+                          alt={value[0] + "profile picture"}
+                        />
+                        <div>
+                          <h4 className="ml-3 font-medium">{value[0]}</h4>
+                          <p className="ml-3 text-gray-500">
+                            {moment(value[2].toString()).format(
+                              "MMMM Do YYYY, h:mm a"
+                            )}
+                          </p>
+                        </div>
+                        {value[4] === session?.user?.email ? (
+                          <div className="flex -ml-6">
+                            <MdModeEditOutline
+                              className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                              onClick={() => setIsEditingPost(true)}
+                            />
+                            <BsFillTrashFill
+                              className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                              onClick={handleDeleteComment}
+                            />
+                          </div>
+                        ) : null}
                       </div>
                     </div>
 

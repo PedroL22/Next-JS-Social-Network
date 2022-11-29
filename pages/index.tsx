@@ -61,6 +61,7 @@ export default function Home({ posts }: any) {
                     text={item.text}
                     date={item.date}
                     comments={item.comments}
+                    likes={item.likes}
                   />
                 </div>
               ))}
@@ -75,6 +76,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
+      _count: {
+        select: {
+          Likes: true,
+        },
+      },
       postComments: {
         select: {
           id: true,
@@ -110,9 +116,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
           i.User?.image,
           i.createdAt.toISOString(),
           i.text,
+          i.User?.email,
+          i.id,
         ];
         return dia;
       }),
+
+      likes: post._count.Likes,
     };
   });
 
