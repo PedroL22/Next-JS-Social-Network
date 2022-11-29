@@ -62,6 +62,7 @@ export default function Post({
     });
 
     setCommentTextState("");
+    setIsCommenting(false);
   }
 
   return (
@@ -122,10 +123,23 @@ export default function Post({
             <AiFillLike />
             <p className="font-medium -mt-1 ml-1">Like</p>
           </div>
-          <div className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in">
-            <BiCommentDetail />
-            <p className="font-medium -mt-1 ml-1">Comment</p>
-          </div>
+          {isCommenting === false ? (
+            <div
+              onClick={() => setIsCommenting(true)}
+              className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
+            >
+              <BiCommentDetail />
+              <p className="font-medium -mt-1 ml-1">Comment</p>
+            </div>
+          ) : (
+            <div
+              onClick={() => setIsCommenting(false)}
+              className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
+            >
+              <BiCommentDetail />
+              <p className="font-medium -mt-1 ml-1">Comment</p>
+            </div>
+          )}
         </div>
         {isCommenting === true ? (
           <form onSubmit={handleCreateComment} className="flex mx-auto">
