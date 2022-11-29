@@ -7,20 +7,7 @@ import api from "../../lib/axios";
 import Post from "../../components/Post";
 import { useRouter } from "next/router";
 
-export const getStaticPaths = async () => {
-  const fetch = await api.get("/api/users");
-  const res = await fetch.data;
-
-  const paths = [res].map((item: any) => {
-    return {
-      params: { id: String(item.id) },
-    };
-  });
-
-  return { paths, fallback: false };
-};
-
-export const getStaticProps = async (context: any) => {
+export const getServerSideProps = async (context: any) => {
   const id = context.params.id;
   const fetch = await api.get("/api/users/" + id);
   const res = await fetch.data;
@@ -29,7 +16,6 @@ export const getStaticProps = async (context: any) => {
     props: {
       data: res,
     },
-    revalidate: 10,
   };
 };
 
