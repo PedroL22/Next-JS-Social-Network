@@ -5,6 +5,7 @@ import Link from "next/link";
 import moment from "moment";
 import { MdModeEditOutline } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
+import { IoMdSend } from "react-icons/io";
 import api from "../lib/axios";
 
 export default function Post({
@@ -57,7 +58,7 @@ export default function Post({
       email: session?.user?.email,
     });
 
-    setIsEditingComment(false);
+    setCommentTextState("");
   }
 
   return (
@@ -113,80 +114,65 @@ export default function Post({
             </button>
           </form>
         )}
+        <form onSubmit={handleCreateComment} className="flex mx-auto">
+          <input
+            type="text"
+            value={commentTextState}
+            onChange={(e: any) => setCommentTextState(e.target.value)}
+            className="bg-gray-white pl-4 xl:pr-24 pr-12 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
+            placeholder="Comment something..."
+          />
+          <button
+            type="submit"
+            className="my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+          >
+            <IoMdSend className="text-gray-white hover:text-gray-200 transition-all duration-250 ease-in" />
+          </button>
+        </form>
         <div>
-          {isEditingComment === false ? (
-            <>
-              {comments.map((comment: any) => {
-                async function handleDeleteComment() {
-                  await api.post("/api/comments/delete", {
-                    id: comment.id,
-                  });
+          {comments.map((comment: any) => {
+            async function handleDeleteComment() {
+              await api.post("/api/comments/delete", {
+                id: comment.id,
+              });
 
-                  setIsEditingPost(false);
-                }
+              setIsEditingPost(false);
+            }
 
-                return (
-                  <div key={comment.id} className="my-6">
-                    <div className="flex">
-                      <div className="flex justify-between">
-                        <Image
-                          src={comment.User.image}
-                          width={40}
-                          height={40}
-                          className="w-[40px] h-[40px] rounded-full"
-                          alt={comment.User.name + "profile picture"}
-                        />
-                        <div>
-                          <h4 className="ml-3 font-medium">{}</h4>
-                          <p className="ml-3 text-gray-500">
-                            {moment(comment.createdAt.toString()).format(
-                              "MMMM Do YYYY, h:mm a"
-                            )}
-                          </p>
-                        </div>
-                        {comment.email === session?.user?.email ? (
-                          <div className="flex -ml-6">
-                            <MdModeEditOutline
-                              className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
-                              onClick={() => setIsEditingPost(true)}
-                            />
-                            <BsFillTrashFill
-                              className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
-                              onClick={handleDeleteComment}
-                            />
-                          </div>
-                        ) : null}
-                      </div>
+            return (
+              <div key={comment.id} className="my-6">
+                <div className="flex">
+                  <div className="flex justify-between">
+                    <Image
+                      src={comment.User.image}
+                      width={40}
+                      height={40}
+                      className="w-[40px] h-[40px] rounded-full"
+                      alt={comment.User.name + "profile picture"}
+                    />
+                    <div>
+                      <h4 className="ml-3 font-medium">{}</h4>
+                      <p className="ml-3 text-gray-500">
+                        {moment(comment.createdAt.toString()).format(
+                          "MMMM Do YYYY, h:mm a"
+                        )}
+                      </p>
                     </div>
-
-                    <h3>{comment.text}</h3>
+                    {comment.email === session?.user?.email ? (
+                      <div className="flex -ml-6">
+                        <BsFillTrashFill
+                          className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                          onClick={handleDeleteComment}
+                        />
+                      </div>
+                    ) : null}
                   </div>
-                );
-              })}
-              <button
-                onClick={() => setIsEditingComment(true)}
-                className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
-              >
-                Comment
-              </button>
-            </>
-          ) : (
-            <form onSubmit={handleCreateComment} className="mx-auto">
-              <input
-                type="text"
-                value={commentTextState}
-                onChange={(e: any) => setCommentTextState(e.target.value)}
-                className="bg-gray-white pl-4 xl:pr-44 pr-36 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
-                placeholder="Comment something..."
-              />
-              <button
-                type="submit"
-                className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
-              >
-                Comment
-              </button>
-            </form>
-          )}
+                </div>
+
+                <h3>{comment.text}</h3>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
