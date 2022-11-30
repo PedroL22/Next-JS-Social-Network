@@ -96,24 +96,15 @@ export default function Account({ posts }: any) {
 export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await prisma.posts.findMany({
     include: {
-      User: {
+      User: true,
+      _count: {
         select: {
-          id: true,
-          name: true,
-          image: true,
-          email: true,
+          Likes: true,
         },
       },
-      postComments: {
-        select: {
-          User: true,
-          createdAt: true,
-          text: true,
-        },
-      },
+      postComments: { include: { User: true } },
     },
   });
-  console.log(posts);
 
   const data: any = posts.map((post: any) => {
     return {
@@ -125,21 +116,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
       ownerImage: post.User?.image,
       ownerEmail: post.email,
 
-      comments: post.postComments.map((i: any) => {
-        const dia = [
-          i.User?.name,
-          i.User?.image,
-          i.createdAt.toISOString(),
-          i.text,
-        ];
-        return dia;
-      }),
+      comments: post.postComments,
+
+      likes: post._count.Likes,
     };
   });
 
   return {
     props: {
-      posts: data,
+      posts: JSON.parse(JSON.stringify(data)),
     },
   };
 };

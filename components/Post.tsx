@@ -173,18 +173,18 @@ export default function Post({
                 <div className="flex">
                   <div className="flex justify-between">
                     <Image
-                      src={comment.User.image}
+                      src={comment?.User?.image}
                       width={40}
                       height={40}
                       className="w-[40px] h-[40px] rounded-full"
-                      alt={comment.User.name + "profile picture"}
+                      alt={comment?.User?.name + "profile picture"}
                     />
                     <div>
                       <h4 className="ml-3 font-medium">
                         {comment?.User?.name}
                       </h4>
                       <p className="ml-3 text-gray-500 whitespace-nowrap">
-                        {moment(comment.createdAt.toString()).format(
+                        {moment(comment?.createdAt?.toString()).format(
                           "MMMM Do YYYY, h:mm a"
                         )}
                       </p>
