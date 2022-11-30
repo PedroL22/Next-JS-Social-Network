@@ -70,15 +70,7 @@ export default function Details({ data }: any) {
                       ownerImage={data?.user?.image}
                       text={item.text}
                       date={item.date}
-                      comments={item.postComments.map((i: any) => {
-                        const dia = [
-                          i.User?.name,
-                          i.User?.image,
-                          i.createdAt,
-                          i.text,
-                        ];
-                        return dia;
-                      })}
+                      comments={item.postComments}
                     />
                   </div>
                 ))}
