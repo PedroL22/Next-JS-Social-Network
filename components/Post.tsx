@@ -121,7 +121,15 @@ export default function Post({
         <div className="flex justify-around">
           <div className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in">
             <AiFillLike />
-            <p className="font-medium -mt-1 ml-1">Like</p>
+
+            {likes > 0 ? (
+              <div className="flex">
+                <p className="font-medium -mt-1 ml-1">{likes}</p>
+                <p className="font-medium -mt-1 ml-1">Likes</p>
+              </div>
+            ) : (
+              <p className="font-medium -mt-1 ml-1">Like</p>
+            )}
           </div>
           {isCommenting === false ? (
             <div
