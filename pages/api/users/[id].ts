@@ -10,17 +10,18 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       id: id,
     },
     include: {
-      _count: {
-        select: {
-          Likes: true,
-        },
-      },
       posts: {
         select: {
           id: true,
           email: true,
           createdAt: true,
           text: true,
+          Likes: true,
+          _count: {
+            select: {
+              Likes: true,
+            },
+          },
           postComments: {
             select: {
               id: true,

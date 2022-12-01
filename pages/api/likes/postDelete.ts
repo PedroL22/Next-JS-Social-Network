@@ -3,11 +3,12 @@ import { prisma } from "../../../lib/prisma";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { postsId } = req.body;
+  const { id } = req.body;
 
   await prisma.likes.delete({
     where: {
-      postsId: postsId,
+      id: id,
+      
     },
   });
 

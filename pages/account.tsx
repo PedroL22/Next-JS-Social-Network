@@ -63,6 +63,8 @@ export default function Account({ posts }: any) {
                       text={item.text}
                       date={item.date}
                       comments={item.comments}
+                      likesCount={item.likesCount}
+                      likesData={item.likesData}
                     />
                   </div>
                 ))}
@@ -97,6 +99,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
+      Likes: true,
       _count: {
         select: {
           Likes: true,
@@ -118,7 +121,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
       comments: post.postComments,
 
-      likes: post._count.Likes,
+      likesCount: post._count.Likes,
+      likesData: post.Likes,
     };
   });
 

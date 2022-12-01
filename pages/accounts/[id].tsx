@@ -71,6 +71,8 @@ export default function Details({ data }: any) {
                       text={item.text}
                       date={item.date}
                       comments={item.postComments}
+                      likesCount={item?._count?.Likes}
+                      likesData={item?.Likes}
                     />
                   </div>
                 ))}

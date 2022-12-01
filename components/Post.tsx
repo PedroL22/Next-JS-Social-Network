@@ -74,9 +74,11 @@ export default function Post({
 
   async function handleDeletePostLike() {
     await api.post("/api/likes/postDelete", {
-      postsId: id,
+      id: likesData.id,
     });
   }
+
+  console.log(likesData.map((i: any) => i.id));
 
   return (
     <div className="flex px-4">
