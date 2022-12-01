@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import Head from "next/head";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { prisma } from "../lib/prisma";
 import Post from "../components/Post";
@@ -73,16 +73,16 @@ export default function Home({ posts }: any) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  console.log(session);
+
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
       Likes: {
-        select: {
-          id: true,
-          email: true,
-          userId: true,
-        },
+        where: { email: { email: { contains: session?.user?.email } } },
       },
       _count: {
         select: {
@@ -94,6 +94,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   });
 
   const postsData: any = posts.map((post: any) => {
+    console.log(post.Likes);
     return {
       id: post.id,
       text: post.text,
