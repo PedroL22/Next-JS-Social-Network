@@ -19,7 +19,8 @@ export default function Post({
   ownerImage,
   ownerEmail,
   comments,
-  likes,
+  likesCount,
+  likesData,
 }: any) {
   const { data: session } = useSession({ required: true });
   const postDate = moment(date).format("MMMM Do YYYY, h:mm a");
@@ -27,7 +28,6 @@ export default function Post({
   const [commentTextState, setCommentTextState] = useState("");
   const [isEditingPost, setIsEditingPost] = useState(false);
   const [isCommenting, setIsCommenting] = useState(false);
-  const [isEditingComment, setIsEditingComment] = useState(false);
 
   async function handleEditPost(event: FormEvent) {
     event.preventDefault();
@@ -63,6 +63,19 @@ export default function Post({
 
     setCommentTextState("");
     setIsCommenting(false);
+  }
+
+  async function handleCreateLike() {
+    await api.post("/api/likes/create", {
+      postsId: id,
+      userId: session?.user?.email,
+    });
+  }
+
+  async function handleDeletePostLike() {
+    await api.post("/api/likes/postDelete", {
+      postsId: id,
+    });
   }
 
   return (
@@ -119,18 +132,69 @@ export default function Post({
           </form>
         )}
         <div className="flex justify-around">
-          <div className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in">
-            <AiFillLike />
+          {likesData
+            .map((i: any) => i.userId)
+            .includes(session?.user?.email) ? (
+            <div
+              onClick={handleDeletePostLike}
+              className="flex bg-blue-500 w-full px-3 py-2 rounded-md hover:bg-blue-600 cursor-pointer transition-all duration-250 ease-in"
+            >
+              <AiFillLike className="text-white" />
 
-            {likes > 0 ? (
-              <div className="flex">
-                <p className="font-medium -mt-1 ml-1">{likes}</p>
-                <p className="font-medium -mt-1 ml-1">Likes</p>
-              </div>
-            ) : (
-              <p className="font-medium -mt-1 ml-1">Like</p>
-            )}
-          </div>
+              {likesCount >= 2 ? (
+                <div className="flex">
+                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                    {likesCount}
+                  </p>
+                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                    Likes
+                  </p>
+                </div>
+              ) : likesCount === 1 ? (
+                <div className="flex">
+                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                    {likesCount}
+                  </p>
+                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                    Like
+                  </p>
+                </div>
+              ) : (
+                <div className="flex">
+                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                    Like
+                  </p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div
+              onClick={handleCreateLike}
+              className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
+            >
+              <AiFillLike />
+
+              {likesCount >= 2 ? (
+                <div className="flex">
+                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                    {likesCount}
+                  </p>
+                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                    Likes
+                  </p>
+                </div>
+              ) : likesCount === 1 ? (
+                <div className="flex">
+                  <p className="font-medium -mt-1 ml-1">{likesCount}</p>
+                  <p className="font-medium -mt-1 ml-1">Like</p>
+                </div>
+              ) : (
+                <div className="flex">
+                  <p className="font-medium -mt-1 ml-1">Like</p>
+                </div>
+              )}
+            </div>
+          )}
           {isCommenting === false ? (
             <div
               onClick={() => setIsCommenting(true)}

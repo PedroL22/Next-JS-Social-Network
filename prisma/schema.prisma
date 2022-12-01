@@ -82,5 +82,5 @@ model Likes {
   comments   Comments? @relation(fields: [commentsId], references: [id], onDelete: Cascade)
   commentsId String?
   email      User      @relation(fields: [userId], references: [email])
-  userId     String
+  userId     String    @unique
 }
