@@ -76,8 +76,6 @@ export default function Home({ posts }: any) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  console.log(session);
-
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
@@ -94,7 +92,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   const postsData: any = posts.map((post: any) => {
-    console.log(post.Likes);
     return {
       id: post.id,
       text: post.text,

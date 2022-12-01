@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 // import Post from "../components/Post";
 import { prisma } from "../lib/prisma";
 import { GetServerSideProps } from "next";
@@ -95,11 +95,15 @@ export default function Account({ posts }: any) {
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
-      Likes: true,
+      Likes: {
+        where: { email: { email: { contains: session?.user?.email } } },
+      },
       _count: {
         select: {
           Likes: true,
