@@ -80,7 +80,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: {
       User: true,
       Likes: {
-        where: { email: { email: { contains: session?.user?.email } } },
+        where: {
+          email: { email: { contains: session?.user?.email as string } },
+        },
       },
       _count: {
         select: {
