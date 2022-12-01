@@ -8,7 +8,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   await prisma.likes.delete({
     where: {
       id: id,
-      
     },
   });
 

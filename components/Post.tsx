@@ -72,13 +72,13 @@ export default function Post({
     });
   }
 
-  async function handleDeletePostLike() {
+  async function handleDeletePostLike(event: any, id: any) {
+    const code = id.map((i: any) => i.id);
+
     await api.post("/api/likes/postDelete", {
-      id: likesData.id,
+      id: code[0],
     });
   }
-
-  console.log(likesData.map((i: any) => i.id));
 
   return (
     <div className="flex px-4">
@@ -138,11 +138,10 @@ export default function Post({
             .map((i: any) => i.userId)
             .includes(session?.user?.email) ? (
             <div
-              onClick={handleDeletePostLike}
+              onClick={(event) => handleDeletePostLike(event, likesData)}
               className="flex bg-blue-500 w-full px-3 py-2 rounded-md hover:bg-blue-600 cursor-pointer transition-all duration-250 ease-in"
             >
               <AiFillLike className="text-white" />
-
               {likesCount >= 2 ? (
                 <div className="flex">
                   <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">

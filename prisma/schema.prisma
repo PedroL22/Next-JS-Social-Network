@@ -83,4 +83,5 @@ model Likes {
   comments   Comments? @relation(fields: [commentsId], references: [id], onDelete: Cascade)
   posts      Posts?    @relation(fields: [postsId], references: [id], onDelete: Cascade)
   email      User      @relation(fields: [userId], references: [email], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
 }

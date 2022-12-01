@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Likes" ALTER COLUMN "postsId" DROP NOT NULL,
-ALTER COLUMN "commentsId" DROP NOT NULL;

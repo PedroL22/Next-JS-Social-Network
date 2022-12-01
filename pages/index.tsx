@@ -77,7 +77,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
-      Likes: true,
+      Likes: {
+        select: {
+          id: true,
+          email: true,
+          userId: true,
+        },
+      },
       _count: {
         select: {
           Likes: true,
