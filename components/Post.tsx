@@ -38,6 +38,7 @@ export default function Post({
   };
 
   const notify = (notif: string) => toast.success(notif);
+  const notifyError = (notif: string) => toast.error(notif);
 
   async function handleEditPost(event: FormEvent) {
     event.preventDefault();
@@ -48,12 +49,12 @@ export default function Post({
             text: postText,
             id: id,
           })
-        : null;
+        : notifyError("Post can't be empty.");
     } catch (e) {
       console.error(e);
     } finally {
       setIsEditingPost(false);
-      notify("Post edited successfully.");
+      postText !== "" ? notify("Post edited successfully.") : null;
       refreshData();
     }
   }
@@ -83,12 +84,13 @@ export default function Post({
             text: commentTextState,
             email: session?.user?.email,
           })
-        : null;
+        : notifyError("Comment can't be empty.");
     } catch (e) {
       console.error(e);
     } finally {
       setCommentTextState("");
       setIsCommenting(false);
+      commentTextState !== "" ? notify("Comment posted successfully.") : null;
       refreshData();
     }
   }
@@ -297,6 +299,8 @@ export default function Post({
               await api.post("/api/comments/delete", {
                 id: comment.id,
               });
+
+              notify("Comment deleted successfully.");
 
               setIsEditingPost(false);
             }

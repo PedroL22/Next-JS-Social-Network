@@ -6,6 +6,7 @@ import { prisma } from "../lib/prisma";
 import Post from "../components/Post";
 import api from "../lib/axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 export default function Home({ posts }: any) {
   const { data: session }: any = useSession({ required: true });
@@ -17,6 +18,9 @@ export default function Home({ posts }: any) {
     router.replace(router.asPath);
   };
 
+  const notify = (notif: string) => toast.success(notif);
+  const notifyError = (notif: string) => toast.error(notif);
+
   async function handleCreatePost(event: FormEvent) {
     event.preventDefault();
 
@@ -26,11 +30,12 @@ export default function Home({ posts }: any) {
             text: newPost,
             email: session.user.email,
           })
-        : null;
+        : notifyError("Post can't be empty.");
     } catch (e) {
       console.error(e);
     } finally {
       setNewPost("");
+      newPost !== "" ? notify("Successfully posted.") : null;
       refreshData();
     }
   }
