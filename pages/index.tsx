@@ -53,7 +53,7 @@ export default function Home({ posts }: any) {
               />
               <button
                 type="submit"
-                className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+                className="block my-2 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
               >
                 Post
               </button>

@@ -41,7 +41,7 @@ export default function Account({ posts }: any) {
                 {session.user.email}
               </p>
               <Link href="/">
-                <button className="flex mt-2 mx-auto xl:ml-24 text-white bg-blue-700 rounded-md px-5 py-2 hover:bg-blue-800 transition-all ease-in duration-75">
+                <button className="flex mt-2 mx-auto xl:ml-24 text-white bg-blue-700 rounded-md px-5 py-2 hover:bg-blue-800 active:bg-blue-900 transition-all ease-in duration-75">
                   Back
                 </button>
               </Link>

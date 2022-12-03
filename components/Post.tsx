@@ -171,13 +171,13 @@ export default function Post({
             <div className="flex">
               <button
                 type="submit"
-                className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+                className="block my-2 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
               >
                 Edit
               </button>
               <button
                 onClick={() => setIsEditingPost(false)}
-                className="block my-2 bg-red-700 hover:bg-red-800 text-white px-5 py-2 ml-2 rounded-md transition-all duration-250 ease-in"
+                className="block my-2 bg-red-700 hover:bg-red-800 active:bg-red-900 text-white px-5 py-2 ml-2 rounded-md transition-all duration-250 ease-in"
               >
                 Cancel
               </button>
@@ -276,7 +276,7 @@ export default function Post({
             />
             <button
               type="submit"
-              className="my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+              className="my-2 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
             >
               <IoMdSend className="text-gray-white hover:text-gray-200 transition-all duration-250 ease-in" />
             </button>
