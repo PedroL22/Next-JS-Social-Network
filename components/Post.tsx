@@ -9,6 +9,7 @@ import { IoMdSend } from "react-icons/io";
 import { AiFillLike } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import api from "../lib/axios";
+import { useRouter } from "next/router";
 
 export default function Post({
   id,
@@ -29,6 +30,12 @@ export default function Post({
   const [isEditingPost, setIsEditingPost] = useState(false);
   const [isCommenting, setIsCommenting] = useState(false);
 
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
   async function handleEditPost(event: FormEvent) {
     event.preventDefault();
 
@@ -41,43 +48,67 @@ export default function Post({
       console.error(e);
     } finally {
       setIsEditingPost(false);
+      refreshData();
     }
   }
 
   async function handleDeletePost() {
-    await api.post("/api/posts/delete", {
-      id: id,
-    });
+    try {
+      await api.post("/api/posts/delete", {
+        id: id,
+      });
 
-    setIsEditingPost(false);
+      setIsEditingPost(false);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      refreshData();
+    }
   }
 
   async function handleCreateComment(event: FormEvent) {
     event.preventDefault();
 
-    await api.post("/api/comments/create", {
-      postsId: id,
-      text: commentTextState,
-      email: session?.user?.email,
-    });
-
-    setCommentTextState("");
-    setIsCommenting(false);
+    try {
+      await api.post("/api/comments/create", {
+        postsId: id,
+        text: commentTextState,
+        email: session?.user?.email,
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setCommentTextState("");
+      setIsCommenting(false);
+      refreshData();
+    }
   }
 
   async function handleCreateLike() {
-    await api.post("/api/likes/create", {
-      postsId: id,
-      userId: session?.user?.email,
-    });
+    try {
+      await api.post("/api/likes/create", {
+        postsId: id,
+        userId: session?.user?.email,
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      refreshData();
+    }
   }
 
   async function handleDeletePostLike(event: any, id: any) {
     const code = id.map((i: any) => i.id);
 
-    await api.post("/api/likes/postDelete", {
-      id: code[0],
-    });
+    try {
+      await api.post("/api/likes/postDelete", {
+        id: code[0],
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      refreshData();
+    }
   }
 
   return (

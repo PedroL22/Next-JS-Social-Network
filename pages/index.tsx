@@ -5,20 +5,32 @@ import { GetServerSideProps } from "next";
 import { prisma } from "../lib/prisma";
 import Post from "../components/Post";
 import api from "../lib/axios";
+import { useRouter } from "next/router";
 
 export default function Home({ posts }: any) {
   const { data: session }: any = useSession({ required: true });
   const [newPost, setNewPost] = useState("");
 
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
   async function handleCreatePost(event: FormEvent) {
     event.preventDefault();
 
-    await api.post("/api/posts/create", {
-      text: newPost,
-      email: session.user.email,
-    });
-
-    setNewPost("");
+    try {
+      await api.post("/api/posts/create", {
+        text: newPost,
+        email: session.user.email,
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setNewPost("");
+      refreshData();
+    }
   }
 
   return (
