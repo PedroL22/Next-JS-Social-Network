@@ -19,4 +19,15 @@ export default NextAuth({
     }),
   ],
   secret: process.env.SECRET as string,
+  callbacks: {
+    session({ session, user }: any) {
+      if (session.user) {
+        session.user.id = user.id;
+        if (user.isAdmin) {
+          session.user.isAdmin = user.isAdmin;
+        }
+      }
+      return session;
+    },
+  },
 });
