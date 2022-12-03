@@ -167,12 +167,21 @@ export default function Post({
               placeholder="Write something..."
               defaultValue={text}
             />
-            <button
-              type="submit"
-              className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
-            >
-              Edit
-            </button>
+
+            <div className="flex">
+              <button
+                type="submit"
+                className="block my-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => setIsEditingPost(false)}
+                className="block my-2 bg-red-700 hover:bg-red-800 text-white px-5 py-2 ml-2 rounded-md transition-all duration-250 ease-in"
+              >
+                Cancel
+              </button>
+            </div>
           </form>
         )}
         <div className="flex justify-around">
