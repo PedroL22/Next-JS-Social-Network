@@ -40,10 +40,12 @@ export default function Post({
     event.preventDefault();
 
     try {
-      await api.post("/api/posts/edit", {
-        text: postText,
-        id: id,
-      });
+      postText !== ""
+        ? await api.post("/api/posts/edit", {
+            text: postText,
+            id: id,
+          })
+        : null;
     } catch (e) {
       console.error(e);
     } finally {
@@ -70,11 +72,13 @@ export default function Post({
     event.preventDefault();
 
     try {
-      await api.post("/api/comments/create", {
-        postsId: id,
-        text: commentTextState,
-        email: session?.user?.email,
-      });
+      commentTextState !== ""
+        ? await api.post("/api/comments/create", {
+            postsId: id,
+            text: commentTextState,
+            email: session?.user?.email,
+          })
+        : null;
     } catch (e) {
       console.error(e);
     } finally {

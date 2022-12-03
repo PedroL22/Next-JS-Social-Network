@@ -21,10 +21,12 @@ export default function Home({ posts }: any) {
     event.preventDefault();
 
     try {
-      await api.post("/api/posts/create", {
-        text: newPost,
-        email: session.user.email,
-      });
+      newPost !== ""
+        ? await api.post("/api/posts/create", {
+            text: newPost,
+            email: session.user.email,
+          })
+        : null;
     } catch (e) {
       console.error(e);
     } finally {
