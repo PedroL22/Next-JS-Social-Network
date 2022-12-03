@@ -10,6 +10,7 @@ import { AiFillLike } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import api from "../lib/axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 export default function Post({
   id,
@@ -36,6 +37,8 @@ export default function Post({
     router.replace(router.asPath);
   };
 
+  const notify = (notif: string) => toast.success(notif);
+
   async function handleEditPost(event: FormEvent) {
     event.preventDefault();
 
@@ -50,6 +53,7 @@ export default function Post({
       console.error(e);
     } finally {
       setIsEditingPost(false);
+      notify("Post edited successfully.");
       refreshData();
     }
   }
@@ -64,6 +68,7 @@ export default function Post({
     } catch (e) {
       console.error(e);
     } finally {
+      notify("Post deleted successfully.");
       refreshData();
     }
   }
