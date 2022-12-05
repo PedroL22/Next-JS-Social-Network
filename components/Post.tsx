@@ -131,8 +131,9 @@ export default function Post({
               src={ownerImage}
               width={48}
               height={48}
-              className="rounded-full"
-              alt="profile picture"
+              className="rounded-full cursor-pointer"
+              alt={ownerName + "profile picture"}
+              onClick={() => router.push("accounts/" + ownerId)}
             />
             <div>
               <Link href={"accounts/" + ownerId}>
@@ -313,11 +314,19 @@ export default function Post({
                       src={comment?.User?.image}
                       width={40}
                       height={40}
-                      className="w-[40px] h-[40px] rounded-full"
+                      className="w-[40px] h-[40px] rounded-full cursor-pointer"
                       alt={comment?.User?.name + "profile picture"}
+                      onClick={() =>
+                        router.push("accounts/" + comment?.User?.id)
+                      }
                     />
                     <div>
-                      <h4 className="ml-3 font-medium">
+                      <h4
+                        className="ml-3 font-medium cursor-pointer"
+                        onClick={() =>
+                          router.push("accounts/" + comment?.User?.id)
+                        }
+                      >
                         {comment?.User?.name}
                       </h4>
                       <p className="ml-3 text-gray-500 whitespace-nowrap">
