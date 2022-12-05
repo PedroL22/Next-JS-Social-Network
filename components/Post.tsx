@@ -139,7 +139,9 @@ export default function Post({
               <Link href={"accounts/" + ownerId}>
                 <h2 className="ml-3 font-medium">{ownerName}</h2>
               </Link>
-              <p className="ml-3 text-gray-500 whitespace-nowrap">{postDate}</p>
+              <p className="ml-3 text-gray-500 whitespace-nowrap text-sm">
+                {postDate}
+              </p>
             </div>
             {ownerEmail === session?.user?.email ? (
               <div className="flex -ml-6">
@@ -329,7 +331,7 @@ export default function Post({
                       >
                         {comment?.User?.name}
                       </h4>
-                      <p className="ml-3 text-gray-500 whitespace-nowrap">
+                      <p className="ml-3 text-gray-500 whitespace-nowrap text-sm">
                         {moment(comment?.createdAt?.toString()).format(
                           "MMMM Do YYYY, h:mm a"
                         )}
