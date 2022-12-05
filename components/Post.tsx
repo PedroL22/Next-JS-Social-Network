@@ -322,7 +322,7 @@ export default function Post({
                     />
                     <div>
                       <h4
-                        className="ml-3 font-medium cursor-pointer"
+                        className="ml-3 font-medium cursor-pointer w-56"
                         onClick={() =>
                           router.push("accounts/" + comment?.User?.id)
                         }
@@ -336,6 +336,13 @@ export default function Post({
                       </p>
                     </div>
                     {comment.email === session?.user?.email ? (
+                      <div className="flex xl:ml-10">
+                        <BsFillTrashFill
+                          className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                          onClick={handleDeleteComment}
+                        />
+                      </div>
+                    ) : session?.user?.isAdmin === true ? (
                       <div className="flex xl:ml-10">
                         <BsFillTrashFill
                           className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
