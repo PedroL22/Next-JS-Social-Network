@@ -30,7 +30,7 @@ export default function ProfileAside() {
         placeat, nesciunt saepe nostrum vero reprehenderit veritatis adipisci
         numquam aperiam?
       </p>
-      <div className="flex justify-between">
+      <div className="flex justify-around gap-20">
         <div>
           <p className="text-sm font-medium">Posts</p>
           <p className="text-sm">10</p>
