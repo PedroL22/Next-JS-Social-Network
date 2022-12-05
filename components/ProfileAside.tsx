@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -19,10 +20,12 @@ export default function ProfileAside() {
           height={65}
           onClick={() => router.push("/account")}
         />
-        <div className="mt-3">
-          <p className="font-medium">{session?.user?.name}</p>
-          <p className="text-sm text-gray-500">{session?.user?.email}</p>
-        </div>
+        <Link href="/account">
+          <div className="mt-3">
+            <p className="font-medium">{session?.user?.name}</p>
+            <p className="text-sm text-gray-500">{session?.user?.email}</p>
+          </div>
+        </Link>
       </div>
       <p className="text-sm my-4">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum, at a
