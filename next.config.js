@@ -8,7 +8,11 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["localhost", "lh3.googleusercontent.com"],
+    domains: [
+      "localhost",
+      "lh3.googleusercontent.com",
+      "avatars.githubusercontent.com",
+    ],
   },
 };
 
