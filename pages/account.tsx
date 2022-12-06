@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 export default function Account({ posts, aside }: any) {
   const { data: session }: any = useSession({ required: true });
   const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState();
   const [bio, setBio] = useState();
 
   const router = useRouter();
@@ -26,6 +27,13 @@ export default function Account({ posts, aside }: any) {
 
   const editProfile = () => {
     try {
+      name !== ""
+        ? api.post("/api/username/edit", {
+            email: session?.user?.email,
+            name: name,
+          })
+        : notifyError("Name can't be empty.");
+
       bio !== ""
         ? api.post("/api/bio/edit", {
             email: session?.user?.email,
@@ -148,11 +156,14 @@ export default function Account({ posts, aside }: any) {
                     )}
 
                     <div className="mt-3">
-                      <p className="font-medium text-black dark:text-white">
-                        {session?.user?.name.length > 20
-                          ? session?.user?.name.substring(0, 20) + "..."
-                          : session?.user?.name}
-                      </p>
+                      <input
+                        type="text"
+                        placeholder="Your name"
+                        value={name}
+                        onChange={(e: any) => setName(e.target.value)}
+                        defaultValue={session?.user?.name}
+                        className="bg-gray-200 dark:bg-gray-600 px-2 w-40 rounded-md outline-none border dark:border-none dark:text-white focus:border-gray-400"
+                      />
                       <p className="text-sm text-gray-500 dark:text-gray-200">
                         {session?.user?.email}
                       </p>
