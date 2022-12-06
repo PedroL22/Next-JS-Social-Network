@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-export default function ProfileAside() {
+export default function ProfileAside({
+  postsCount,
+  commentsCount,
+  likesCount,
+}) {
   const { data: session }: any = useSession({ required: true });
 
   const router = useRouter();
@@ -12,14 +16,16 @@ export default function ProfileAside() {
   return (
     <div className="bg-white max-w-xs p-10 rounded-xl fixed">
       <div className="flex">
-        <Image
-          src={session?.user?.image}
-          alt={session?.user?.name + "profile picture"}
-          className="rounded-full cursor-pointer mr-2"
-          width={65}
-          height={65}
-          onClick={() => router.push("/account")}
-        />
+        {session?.user?.image && (
+          <Image
+            src={session?.user?.image}
+            alt={session?.user?.name + " profile picture"}
+            className="rounded-full cursor-pointer mr-2"
+            width={65}
+            height={65}
+            onClick={() => router.push("/account")}
+          />
+        )}
         <Link href="/account">
           <div className="mt-3">
             <p className="font-medium">{session?.user?.name}</p>
@@ -33,14 +39,18 @@ export default function ProfileAside() {
         placeat, nesciunt saepe nostrum vero reprehenderit veritatis adipisci
         numquam aperiam?
       </p>
-      <div className="flex justify-around gap-20">
+      <div className="flex justify-around gap-10">
         <div>
           <p className="text-sm font-medium">Posts</p>
-          <p className="text-sm">10</p>
+          <p className="text-sm text-center">{postsCount}</p>
         </div>
         <div>
           <p className="text-sm font-medium">Comments</p>
-          <p className="text-sm">20</p>
+          <p className="text-sm text-center">{commentsCount}</p>
+        </div>
+        <div>
+          <p className="text-sm font-medium">Likes</p>
+          <p className="text-sm text-center">{likesCount}</p>
         </div>
       </div>
     </div>

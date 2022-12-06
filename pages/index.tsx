@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import ProfileAside from "../components/ProfileAside";
 
-export default function Home({ posts }: any) {
+export default function Home({ posts, aside }: any) {
   const { data: session }: any = useSession({ required: true });
   const [newPost, setNewPost] = useState("");
 
@@ -53,7 +53,11 @@ export default function Home({ posts }: any) {
         <main className="pt-20 mx-auto max-w-7xl">
           <div className="flex md:gap-80 lg:gap-96 xl:gap-96 md:justify-around lg:justify-around xl:justify-around">
             <div className="hidden md:flex lg:flex xl:flex">
-              <ProfileAside />
+              <ProfileAside
+                postsCount={aside._count.posts}
+                commentsCount={aside._count.Comments}
+                likesCount={aside._count.Likes}
+              />
             </div>
             <div>
               <div className="flex px-4">
@@ -103,6 +107,17 @@ export default function Home({ posts }: any) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
+  const aside = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email as string,
+    },
+    select: {
+      _count: {
+        select: { posts: true, Comments: true, Likes: true },
+      },
+    },
+  });
+
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
@@ -140,6 +155,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       posts: JSON.parse(JSON.stringify(postsData)),
+      aside: aside,
     },
   };
 };
