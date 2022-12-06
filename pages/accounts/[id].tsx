@@ -23,7 +23,7 @@ export default function Details({ data }: any) {
 
   if (session)
     return (
-      <div className="bg-gray-200 min-h-screen h-full">
+      <div className="bg-gray-200 dark:bg-gray-800 min-h-screen">
         <Head>
           <title>{data?.user?.name} - Next JS Social Network</title>
           <meta
@@ -33,29 +33,75 @@ export default function Details({ data }: any) {
           <link rel="icon" href="/favicon.png" />
         </Head>
 
-        <div className="xl:flex block xl:max-w-7xl xl:mx-auto ">
-          <div className="xl:pt-36 pt-20 xl:ml-5 xl:flex block">
-            {data?.user?.image ? (
-              <Image
-                src={data?.user?.image}
-                width={100}
-                height={100}
-                alt={`${data?.user?.name} profile picture`}
-                className="w-36 h-36 xl:mx-0 mx-auto rounded-lg"
-              />
-            ) : null}
-            <div>
-              <h1 className="xl:ml-10 mt-2 text-center font-medium text-3xl text-gray-600">
-                {data?.user?.name}
-              </h1>
-              <p className="xl:ml-10 text-center text-gray-400">
-                {data?.user?.email}
-              </p>
-              <Link href="/">
-                <button className="flex mt-2 mx-auto xl:ml-24 text-white bg-blue-700 rounded-md px-5 py-2 hover:bg-blue-800 active:bg-blue-900 transition-all ease-in duration-75">
-                  Back
-                </button>
-              </Link>
+        <div className="md:flex md:max-w-7xl md:mx-auto md:justify-around xl:flex xl:max-w-7xl xl:mx-auto xl:justify-around block">
+          <div className="md:flex xl:flex pt-16">
+            <div className="bg-white dark:bg-gray-700 max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
+              <div className="flex">
+                {data?.user?.image && (
+                  <Image
+                    src={data?.user?.image}
+                    alt={data?.user?.name + " profile picture"}
+                    className="rounded-full cursor-pointer mr-2"
+                    width={65}
+                    height={65}
+                  />
+                )}
+
+                <div className="mt-3">
+                  <p className="font-medium text-black dark:text-white">
+                    {data?.user?.name.length > 20
+                      ? data?.user?.name.substring(0, 20) + "..."
+                      : data?.user?.name}
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-200">
+                    {data?.user?.email}
+                  </p>
+                </div>
+              </div>
+              {data?.bio ? (
+                <p className="text-sm my-4 text-black dark:text-white">
+                  {data?.bio.length > 500
+                    ? data?.bio.substring(0, 500) + "..."
+                    : data?.bio}
+                </p>
+              ) : (
+                <p className="text-sm my-4 text-black dark:text-white">
+                  No biography yet.
+                </p>
+              )}
+              <div className="flex justify-around gap-10">
+                <div>
+                  <p className="text-sm font-medium text-black dark:text-white">
+                    Posts
+                  </p>
+                  <p className="text-sm text-center text-black dark:text-white">
+                    {/* {data?._count.posts} */}11
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-black dark:text-white">
+                    Comments
+                  </p>
+                  <p className="text-sm text-center text-black dark:text-white">
+                    {/* {data?._count.Comments} */}11
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-black dark:text-white">
+                    Likes
+                  </p>
+                  <p className="text-sm text-center text-black dark:text-white">
+                    {/* {data?._count.Likes} */}11
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-evenly">
+                <Link href="/">
+                  <button className="mt-4 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in">
+                    Back
+                  </button>
+                </Link>
+              </div>
             </div>
             <div>
               {data?.user?.posts

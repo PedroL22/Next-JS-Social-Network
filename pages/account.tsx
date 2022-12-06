@@ -53,7 +53,7 @@ export default function Account({ posts, aside }: any) {
           <link rel="icon" href="/favicon.png" />
         </Head>
 
-        <div className="md:flex md:max-w-7xl md:mx-auto md:justify-around xl:flex xl:max-w-7xl xl:mx-auto xl:justify-around block ">
+        <div className="md:flex md:max-w-7xl md:mx-auto md:justify-around xl:flex xl:max-w-7xl xl:mx-auto xl:justify-around block">
           <div className="md:flex xl:flex pt-16">
             {isEditing === false ? (
               <div>
