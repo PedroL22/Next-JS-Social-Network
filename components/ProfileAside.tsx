@@ -4,11 +4,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
+interface AsideProps {
+  postsCount: number;
+  commentsCount: number;
+  likesCount: number;
+}
+
 export default function ProfileAside({
   postsCount,
   commentsCount,
   likesCount,
-}) {
+}: AsideProps) {
   const { data: session }: any = useSession({ required: true });
 
   const router = useRouter();
