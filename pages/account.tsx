@@ -70,14 +70,22 @@ export default function Account({ posts, aside }: any) {
                     )}
 
                     <div className="mt-3">
-                      <p className="font-medium">{session?.user?.name}</p>
+                      <p className="font-medium">
+                        {session?.user?.name.length > 20
+                          ? session?.user?.name.substring(0, 20) + "..."
+                          : session?.user?.name}
+                      </p>
                       <p className="text-sm text-gray-500">
                         {session?.user?.email}
                       </p>
                     </div>
                   </div>
                   {aside.bio ? (
-                    <p className="text-sm my-4">{aside.bio}</p>
+                    <p className="text-sm my-4">
+                      {aside.bio.length > 500
+                        ? aside.bio.substring(0, 500) + "..."
+                        : aside.bio}
+                    </p>
                   ) : (
                     <p className="text-sm my-4">No biography yet.</p>
                   )}
@@ -132,7 +140,11 @@ export default function Account({ posts, aside }: any) {
                     )}
 
                     <div className="mt-3">
-                      <p className="font-medium">{session?.user?.name}</p>
+                      <p className="font-medium">
+                        {session?.user?.name.length > 20
+                          ? session?.user?.name.substring(0, 20) + "..."
+                          : session?.user?.name}
+                      </p>
                       <p className="text-sm text-gray-500">
                         {session?.user?.email}
                       </p>

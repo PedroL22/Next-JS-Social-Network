@@ -36,13 +36,19 @@ export default function ProfileAside({
         )}
         <Link href="/account">
           <div className="mt-3">
-            <p className="font-medium">{session?.user?.name}</p>
+            <p className="font-medium">
+              {session?.user?.name.length > 20
+                ? session?.user?.name.substring(0, 20) + "..."
+                : session?.user?.name}
+            </p>
             <p className="text-sm text-gray-500">{session?.user?.email}</p>
           </div>
         </Link>
       </div>
       {bio ? (
-        <p className="text-sm my-4">{bio}</p>
+        <p className="text-sm my-4">
+          {bio.length > 500 ? bio.substring(0, 500) + "..." : bio}
+        </p>
       ) : (
         <p className="text-sm my-4">No biography yet.</p>
       )}
