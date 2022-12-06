@@ -22,7 +22,7 @@ export default function ProfileAside({
   const router = useRouter();
 
   return (
-    <div className="bg-white max-w-xs p-10 rounded-xl fixed shadow">
+    <div className="bg-white dark:bg-gray-700 max-w-xs p-10 rounded-xl fixed shadow">
       <div className="flex">
         {session?.user?.image && (
           <Image
@@ -36,34 +36,50 @@ export default function ProfileAside({
         )}
         <Link href="/account">
           <div className="mt-3">
-            <p className="font-medium">
+            <p className="font-medium text-black dark:text-white">
               {session?.user?.name.length > 20
                 ? session?.user?.name.substring(0, 20) + "..."
                 : session?.user?.name}
             </p>
-            <p className="text-sm text-gray-500">{session?.user?.email}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-200">
+              {session?.user?.email}
+            </p>
           </div>
         </Link>
       </div>
       {bio ? (
-        <p className="text-sm my-4">
+        <p className="text-sm my-4 text-black dark:text-white">
           {bio.length > 500 ? bio.substring(0, 500) + "..." : bio}
         </p>
       ) : (
-        <p className="text-sm my-4">No biography yet.</p>
+        <p className="text-sm my-4 text-black dark:text-white">
+          No biography yet.
+        </p>
       )}
       <div className="flex justify-around gap-10">
         <div>
-          <p className="text-sm font-medium">Posts</p>
-          <p className="text-sm text-center">{postsCount}</p>
+          <p className="text-sm font-medium text-black dark:text-white">
+            Posts
+          </p>
+          <p className="text-sm text-center text-black dark:text-white">
+            {postsCount}
+          </p>
         </div>
         <div>
-          <p className="text-sm font-medium">Comments</p>
-          <p className="text-sm text-center">{commentsCount}</p>
+          <p className="text-sm font-medium text-black dark:text-white">
+            Comments
+          </p>
+          <p className="text-sm text-center text-black dark:text-white">
+            {commentsCount}
+          </p>
         </div>
         <div>
-          <p className="text-sm font-medium">Likes</p>
-          <p className="text-sm text-center">{likesCount}</p>
+          <p className="text-sm font-medium text-black dark:text-white">
+            Likes
+          </p>
+          <p className="text-sm text-center text-black dark:text-white">
+            {likesCount}
+          </p>
         </div>
       </div>
     </div>

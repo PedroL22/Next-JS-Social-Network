@@ -49,7 +49,7 @@ export default function Home({ posts, aside }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="bg-gray-200 min-h-screen flex">
+      <div className="bg-gray-200 dark:bg-gray-800 min-h-screen flex">
         <main className="pt-20 mx-auto max-w-7xl">
           <div className="flex md:gap-80 lg:gap-96 xl:gap-96 md:justify-around lg:justify-around xl:justify-around">
             <div className="hidden md:flex lg:flex xl:flex">
@@ -66,7 +66,7 @@ export default function Home({ posts, aside }: any) {
                   <textarea
                     value={newPost}
                     onChange={(e) => setNewPost(e.target.value)}
-                    className="bg-gray-white h-[15vh] xl:h-32 w-96 mx-auto xl:w-96 py-2 px-3 rounded-md outline-0 border focus:border-gray-400 resize-none"
+                    className="bg-white dark:bg-gray-700 dark:text-white h-[15vh] xl:h-32 w-96 mx-auto xl:w-96 py-2 px-3 rounded-xl outline-none border dark:border-none focus:border-gray-400 resize-none"
                     placeholder="Post something..."
                   />
                   <button

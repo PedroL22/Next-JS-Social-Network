@@ -13,7 +13,7 @@ export default function Aside() {
           <GrLinkedinOption className="text-[#00639c]" size={50} />
         </a>
         <a href="https://github.com/PedroL22/" target="_blank" rel="noreferrer">
-          <AiFillGithub className="text-black" size={50} />
+          <AiFillGithub className="text-black dark:text-white" size={50} />
         </a>
         <a
           href="https://twitter.com/lucena_l22/"

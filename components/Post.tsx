@@ -124,7 +124,7 @@ export default function Post({
 
   return (
     <div className="flex px-4">
-      <div className="mx-auto bg-white h-auto w-96 my-4 rounded-sm shadow-md p-5">
+      <div className="mx-auto bg-white dark:bg-gray-700 h-auto w-96 my-4 rounded-md shadow-md p-5">
         <div className="justify-between">
           <div className="flex">
             <Image
@@ -137,9 +137,11 @@ export default function Post({
             />
             <div>
               <Link href={"accounts/" + ownerId}>
-                <h2 className="ml-3 font-medium">{ownerName}</h2>
+                <h2 className="ml-3 font-medium text-black dark:text-white">
+                  {ownerName}
+                </h2>
               </Link>
-              <p className="ml-3 text-gray-500 whitespace-nowrap text-sm">
+              <p className="ml-3 text-gray-500 dark:text-gray-200 whitespace-nowrap text-sm">
                 {postDate}
               </p>
             </div>
@@ -170,14 +172,14 @@ export default function Post({
         </div>
 
         {isEditingPost === false ? (
-          <h1 className="my-5">{text}</h1>
+          <h1 className="my-5 text-black dark:text-white">{text}</h1>
         ) : (
           <form onSubmit={handleEditPost} className="mx-auto">
             <input
               type="text"
               value={postText}
               onChange={(e: any) => setPostText(e.target.value)}
-              className="bg-gray-white pl-4 xl:pr-44 pr-36 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
+              className="bg-white pl-4 xl:pr-44 pr-36 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
               placeholder="Write something..."
               defaultValue={text}
             />
@@ -236,27 +238,29 @@ export default function Post({
           ) : (
             <div
               onClick={handleCreateLike}
-              className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
+              className="flex bg-gray-200 dark:bg-gray-500 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
             >
-              <AiFillLike />
+              <AiFillLike className="text-black dark:text-white" />
 
               {likesCount >= 2 ? (
                 <div className="flex">
-                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                  <p className="font-medium -mt-1 ml-1 text-black dark:text-white hover:text-gray-300 transition-all duration-250 ease-in">
                     {likesCount}
                   </p>
-                  <p className="font-medium -mt-1 ml-1 text-white hover:text-gray-300 transition-all duration-250 ease-in">
+                  <p className="font-medium -mt-1 ml-1 text-black dark:text-white hover:text-gray-300 transition-all duration-250 ease-in">
                     Likes
                   </p>
                 </div>
               ) : likesCount === 1 ? (
                 <div className="flex">
-                  <p className="font-medium -mt-1 ml-1">{likesCount}</p>
-                  <p className="font-medium -mt-1 ml-1">Like</p>
+                  <p className="font-medium -mt-1 ml-1 dark:text-white">
+                    {likesCount}
+                  </p>
+                  <p className="font-medium -mt-1 ml-1 dark:text-white">Like</p>
                 </div>
               ) : (
                 <div className="flex">
-                  <p className="font-medium -mt-1 ml-1">Like</p>
+                  <p className="font-medium -mt-1 ml-1 dark:text-white">Like</p>
                 </div>
               )}
             </div>
@@ -264,18 +268,22 @@ export default function Post({
           {isCommenting === false ? (
             <div
               onClick={() => setIsCommenting(true)}
-              className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
+              className="flex bg-gray-200 dark:bg-gray-500 w-full px-3 py-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition-all duration-250 ease-in"
             >
-              <BiCommentDetail />
-              <p className="font-medium -mt-1 ml-1">Comment</p>
+              <BiCommentDetail className="text-black dark:text-white" />
+              <p className="font-medium -mt-1 ml-1 text-black dark:text-white">
+                Comment
+              </p>
             </div>
           ) : (
             <div
               onClick={() => setIsCommenting(false)}
               className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
             >
-              <BiCommentDetail />
-              <p className="font-medium -mt-1 ml-1">Comment</p>
+              <BiCommentDetail className="text-black dark:text-white" />
+              <p className="font-medium -mt-1 ml-1 text-black dark:text-white">
+                Comment
+              </p>
             </div>
           )}
         </div>
@@ -324,14 +332,14 @@ export default function Post({
                     />
                     <div>
                       <h4
-                        className="ml-3 font-medium cursor-pointer w-56"
+                        className="ml-3 font-medium cursor-pointer w-56 text-black dark:text-white"
                         onClick={() =>
                           router.push("accounts/" + comment?.User?.id)
                         }
                       >
                         {comment?.User?.name}
                       </h4>
-                      <p className="ml-3 text-gray-500 whitespace-nowrap text-sm">
+                      <p className="ml-3 text-gray-500 dark:text-gray-200 whitespace-nowrap text-sm">
                         {moment(comment?.createdAt?.toString()).format(
                           "MMMM Do YYYY, h:mm a"
                         )}
@@ -355,7 +363,7 @@ export default function Post({
                   </div>
                 </div>
 
-                <h3>{comment.text}</h3>
+                <h3 className="text-black dark:text-white">{comment.text}</h3>
               </div>
             );
           })}

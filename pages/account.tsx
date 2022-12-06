@@ -43,7 +43,7 @@ export default function Account({ posts, aside }: any) {
 
   if (session) {
     return (
-      <div className="bg-gray-200 min-h-screen">
+      <div className="bg-gray-200 dark:bg-gray-800 min-h-screen">
         <Head>
           <title>{session.user.name} - Next JS Social Network</title>
           <meta
@@ -57,7 +57,7 @@ export default function Account({ posts, aside }: any) {
           <div className="md:flex xl:flex pt-16">
             {isEditing === false ? (
               <div>
-                <div className="bg-white max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
+                <div className="bg-white dark:bg-gray-700 max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
                   <div className="flex">
                     {session?.user?.image && (
                       <Image
@@ -70,41 +70,49 @@ export default function Account({ posts, aside }: any) {
                     )}
 
                     <div className="mt-3">
-                      <p className="font-medium">
+                      <p className="font-medium text-black dark:text-white">
                         {session?.user?.name.length > 20
                           ? session?.user?.name.substring(0, 20) + "..."
                           : session?.user?.name}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-200">
                         {session?.user?.email}
                       </p>
                     </div>
                   </div>
                   {aside.bio ? (
-                    <p className="text-sm my-4">
+                    <p className="text-sm my-4 text-black dark:text-white">
                       {aside.bio.length > 500
                         ? aside.bio.substring(0, 500) + "..."
                         : aside.bio}
                     </p>
                   ) : (
-                    <p className="text-sm my-4">No biography yet.</p>
+                    <p className="text-sm my-4 text-black dark:text-white">
+                      No biography yet.
+                    </p>
                   )}
                   <div className="flex justify-around gap-10">
                     <div>
-                      <p className="text-sm font-medium">Posts</p>
-                      <p className="text-sm text-center">
+                      <p className="text-sm font-medium text-black dark:text-white">
+                        Posts
+                      </p>
+                      <p className="text-sm text-center text-black dark:text-white">
                         {aside._count.posts}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Comments</p>
-                      <p className="text-sm text-center">
+                      <p className="text-sm font-medium text-black dark:text-white">
+                        Comments
+                      </p>
+                      <p className="text-sm text-center text-black dark:text-white">
                         {aside._count.Comments}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Likes</p>
-                      <p className="text-sm text-center">
+                      <p className="text-sm font-medium text-black dark:text-white">
+                        Likes
+                      </p>
+                      <p className="text-sm text-center text-black dark:text-white">
                         {aside._count.Likes}
                       </p>
                     </div>
@@ -118,7 +126,7 @@ export default function Account({ posts, aside }: any) {
 
                     <button
                       onClick={() => setIsEditing(true)}
-                      className="mt-4 bg-gray-400 hover:bg-gray-500 active:bg-gray-600 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+                      className="mt-4 bg-gray-400 hover:bg-gray-500 active:bg-gray-600 dark:bg-gray-500 dark:hover:bg-gray-600 dark:active:bg-gray-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
                     >
                       Edit
                     </button>
@@ -127,7 +135,7 @@ export default function Account({ posts, aside }: any) {
               </div>
             ) : (
               <div>
-                <div className="bg-white max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
+                <div className="bg-white dark:bg-gray-700 max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
                   <div className="flex">
                     {session?.user?.image && (
                       <Image
@@ -140,12 +148,12 @@ export default function Account({ posts, aside }: any) {
                     )}
 
                     <div className="mt-3">
-                      <p className="font-medium">
+                      <p className="font-medium text-black dark:text-white">
                         {session?.user?.name.length > 20
                           ? session?.user?.name.substring(0, 20) + "..."
                           : session?.user?.name}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-200">
                         {session?.user?.email}
                       </p>
                     </div>
@@ -156,25 +164,31 @@ export default function Account({ posts, aside }: any) {
                     value={bio}
                     onChange={(e: any) => setBio(e.target.value)}
                     defaultValue={aside.bio}
-                    className="my-2 p-2 h-20 w-full text-sm rounded-md resize-none bg-gray-200 outline-none border focus:border-gray-400"
+                    className="my-2 p-2 h-20 w-full text-sm rounded-md resize-none bg-gray-200 dark:bg-gray-600 outline-none border dark:border-none dark:text-white focus:border-gray-400"
                   />
 
                   <div className="flex justify-around gap-10">
                     <div>
-                      <p className="text-sm font-medium">Posts</p>
-                      <p className="text-sm text-center">
+                      <p className="text-sm font-medium text-black dark:text-white">
+                        Posts
+                      </p>
+                      <p className="text-sm text-center text-black dark:text-white">
                         {aside._count.posts}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Comments</p>
-                      <p className="text-sm text-center">
+                      <p className="text-sm font-medium text-black dark:text-white">
+                        Comments
+                      </p>
+                      <p className="text-sm text-center text-black dark:text-white">
                         {aside._count.Comments}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Likes</p>
-                      <p className="text-sm text-center">
+                      <p className="text-sm font-medium text-black dark:text-white">
+                        Likes
+                      </p>
+                      <p className="text-sm text-center text-black dark:text-white">
                         {aside._count.Likes}
                       </p>
                     </div>
