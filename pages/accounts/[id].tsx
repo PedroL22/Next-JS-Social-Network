@@ -58,11 +58,11 @@ export default function Details({ data }: any) {
                   </p>
                 </div>
               </div>
-              {data?.bio ? (
+              {data?.user?.bio ? (
                 <p className="text-sm my-4 text-black dark:text-white">
-                  {data?.bio.length > 500
-                    ? data?.bio.substring(0, 500) + "..."
-                    : data?.bio}
+                  {data?.user?.bio.length > 500
+                    ? data?.user?.bio.substring(0, 500) + "..."
+                    : data?.user?.bio}
                 </p>
               ) : (
                 <p className="text-sm my-4 text-black dark:text-white">
@@ -75,7 +75,7 @@ export default function Details({ data }: any) {
                     Posts
                   </p>
                   <p className="text-sm text-center text-black dark:text-white">
-                    {/* {data?._count.posts} */}11
+                    {data?.user?._count?.posts}
                   </p>
                 </div>
                 <div>
@@ -83,7 +83,7 @@ export default function Details({ data }: any) {
                     Comments
                   </p>
                   <p className="text-sm text-center text-black dark:text-white">
-                    {/* {data?._count.Comments} */}11
+                    {data?.user?._count?.Comments}
                   </p>
                 </div>
                 <div>
@@ -91,7 +91,7 @@ export default function Details({ data }: any) {
                     Likes
                   </p>
                   <p className="text-sm text-center text-black dark:text-white">
-                    {/* {data?._count.Likes} */}11
+                    {data?.user?._count?.Likes}
                   </p>
                 </div>
               </div>
