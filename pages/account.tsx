@@ -237,17 +237,19 @@ export default function Account({ posts, aside }: any) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  const aside = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email as string,
-    },
-    select: {
-      bio: true,
-      _count: {
-        select: { posts: true, Comments: true, Likes: true },
-      },
-    },
-  });
+  const aside = session
+    ? await prisma.user.findUnique({
+        where: {
+          email: session?.user?.email as string,
+        },
+        select: {
+          bio: true,
+          _count: {
+            select: { posts: true, Comments: true, Likes: true },
+          },
+        },
+      })
+    : null;
 
   const posts = await prisma.posts.findMany({
     include: {

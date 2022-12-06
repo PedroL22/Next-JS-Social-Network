@@ -54,10 +54,10 @@ export default function Home({ posts, aside }: any) {
           <div className="flex md:gap-80 lg:gap-96 xl:gap-96 md:justify-around lg:justify-around xl:justify-around">
             <div className="hidden md:flex lg:flex xl:flex">
               <ProfileAside
-                postsCount={aside._count.posts}
-                commentsCount={aside._count.Comments}
-                likesCount={aside._count.Likes}
-                bio={aside.bio}
+                postsCount={aside?._count.posts}
+                commentsCount={aside?._count.Comments}
+                likesCount={aside?._count.Likes}
+                bio={aside?.bio}
               />
             </div>
             <div>
@@ -108,17 +108,19 @@ export default function Home({ posts, aside }: any) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  const aside = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email as string,
-    },
-    select: {
-      bio: true,
-      _count: {
-        select: { posts: true, Comments: true, Likes: true },
-      },
-    },
-  });
+  const aside = session
+    ? await prisma.user.findUnique({
+        where: {
+          email: session?.user?.email as string,
+        },
+        select: {
+          bio: true,
+          _count: {
+            select: { posts: true, Comments: true, Likes: true },
+          },
+        },
+      })
+    : null;
 
   const posts = await prisma.posts.findMany({
     include: {
