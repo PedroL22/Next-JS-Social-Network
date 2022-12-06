@@ -1,16 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { getSession, useSession } from "next-auth/react";
-// import Post from "../components/Post";
+import Post from "../components/Post";
 import { prisma } from "../lib/prisma";
 import { GetServerSideProps } from "next";
-import Post from "../components/Post";
+import api from "../lib/axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 export default function Account({ posts, aside }: any) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data: session }: any = useSession({ required: true });
+  const [isEditing, setIsEditing] = useState(false);
+  const [bio, setBio] = useState();
+
+  const router = useRouter();
+
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
+  const notify = (notif: string) => toast.success(notif);
+  const notifyError = (notif: string) => toast.error(notif);
+
+  const editProfile = () => {
+    try {
+      bio !== ""
+        ? api.post("/api/bio/edit", {
+            email: session?.user?.email,
+            bio: bio,
+          })
+        : notifyError("Bio can't be empty.");
+    } catch (e) {
+      console.error(e);
+    } finally {
+      bio !== "" ? setIsEditing(false) : null;
+      notify("Profile update successfully.");
+      refreshData();
+    }
+  };
 
   if (session) {
     return (
@@ -26,45 +55,136 @@ export default function Account({ posts, aside }: any) {
 
         <div className="md:flex md:max-w-7xl md:mx-auto md:justify-around xl:flex xl:max-w-7xl xl:mx-auto xl:justify-around block ">
           <div className="md:flex xl:flex pt-16">
-            <div className="bg-white max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
-              <div className="flex">
-                {session?.user?.image && (
-                  <Image
-                    src={session?.user?.image}
-                    alt={session?.user?.name + " profile picture"}
-                    className="rounded-full cursor-pointer mr-2"
-                    width={65}
-                    height={65}
-                  />
-                )}
+            {isEditing === false ? (
+              <div>
+                <div className="bg-white max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
+                  <div className="flex">
+                    {session?.user?.image && (
+                      <Image
+                        src={session?.user?.image}
+                        alt={session?.user?.name + " profile picture"}
+                        className="rounded-full cursor-pointer mr-2"
+                        width={65}
+                        height={65}
+                      />
+                    )}
 
-                <div className="mt-3">
-                  <p className="font-medium">{session?.user?.name}</p>
-                  <p className="text-sm text-gray-500">
-                    {session?.user?.email}
-                  </p>
+                    <div className="mt-3">
+                      <p className="font-medium">{session?.user?.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {session?.user?.email}
+                      </p>
+                    </div>
+                  </div>
+                  {aside.bio ? (
+                    <p className="text-sm my-4">{aside.bio}</p>
+                  ) : (
+                    <p className="text-sm my-4">No biography yet.</p>
+                  )}
+                  <div className="flex justify-around gap-10">
+                    <div>
+                      <p className="text-sm font-medium">Posts</p>
+                      <p className="text-sm text-center">
+                        {aside._count.posts}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Comments</p>
+                      <p className="text-sm text-center">
+                        {aside._count.Comments}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Likes</p>
+                      <p className="text-sm text-center">
+                        {aside._count.Likes}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-evenly">
+                    <Link href="/">
+                      <button className="mt-4 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in">
+                        Back
+                      </button>
+                    </Link>
+
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className="mt-4 bg-gray-400 hover:bg-gray-500 active:bg-gray-600 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
               </div>
-              {aside.bio ? (
-                <p className="text-sm my-4">{aside.bio}</p>
-              ) : (
-                <p className="text-sm my-4">No biography yet.</p>
-              )}
-              <div className="flex justify-around gap-10">
-                <div>
-                  <p className="text-sm font-medium">Posts</p>
-                  <p className="text-sm text-center">{aside._count.posts}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium">Comments</p>
-                  <p className="text-sm text-center">{aside._count.Comments}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium">Likes</p>
-                  <p className="text-sm text-center">{aside._count.Likes}</p>
+            ) : (
+              <div>
+                <div className="bg-white max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
+                  <div className="flex">
+                    {session?.user?.image && (
+                      <Image
+                        src={session?.user?.image}
+                        alt={session?.user?.name + " profile picture"}
+                        className="rounded-full cursor-pointer mr-2"
+                        width={65}
+                        height={65}
+                      />
+                    )}
+
+                    <div className="mt-3">
+                      <p className="font-medium">{session?.user?.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {session?.user?.email}
+                      </p>
+                    </div>
+                  </div>
+
+                  <textarea
+                    placeholder="Write a biography..."
+                    value={bio}
+                    onChange={(e: any) => setBio(e.target.value)}
+                    defaultValue={aside.bio}
+                    className="my-2 p-2 h-20 w-full text-sm rounded-md resize-none bg-gray-200 outline-none border focus:border-gray-400"
+                  />
+
+                  <div className="flex justify-around gap-10">
+                    <div>
+                      <p className="text-sm font-medium">Posts</p>
+                      <p className="text-sm text-center">
+                        {aside._count.posts}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Comments</p>
+                      <p className="text-sm text-center">
+                        {aside._count.Comments}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Likes</p>
+                      <p className="text-sm text-center">
+                        {aside._count.Likes}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-evenly">
+                    <button
+                      onClick={editProfile}
+                      className="mt-4 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => setIsEditing(false)}
+                      className="mt-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+
             <div>
               {posts
                 .filter((item: any) =>
