@@ -25,8 +25,8 @@ export default function Account({ posts, aside }: any) {
         </Head>
 
         <div className="md:flex md:max-w-7xl md:mx-auto md:justify-around xl:flex xl:max-w-7xl xl:mx-auto xl:justify-around block ">
-          <div className="md:flex xl:flex pt-20">
-            <div className="bg-white max-w-xs p-10 rounded-xl shadow mx-auto md:mt-4 xl:mt-4 h-fit">
+          <div className="md:flex xl:flex pt-16">
+            <div className="bg-white max-w-xs p-10 rounded-xl shadow mx-auto mt-4 h-fit">
               <div className="flex">
                 {session?.user?.image && (
                   <Image
@@ -65,7 +65,7 @@ export default function Account({ posts, aside }: any) {
                 </div>
               </div>
             </div>
-            <div className="">
+            <div>
               {posts
                 .filter((item: any) =>
                   item.ownerEmail.includes(session.user.email)
