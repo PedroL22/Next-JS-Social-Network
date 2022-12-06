@@ -57,6 +57,7 @@ export default function Home({ posts, aside }: any) {
                 postsCount={aside._count.posts}
                 commentsCount={aside._count.Comments}
                 likesCount={aside._count.Likes}
+                bio={aside.bio}
               />
             </div>
             <div>
@@ -112,6 +113,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       email: session?.user?.email as string,
     },
     select: {
+      bio: true,
       _count: {
         select: { posts: true, Comments: true, Likes: true },
       },

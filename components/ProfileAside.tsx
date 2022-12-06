@@ -8,12 +8,14 @@ interface AsideProps {
   postsCount: number;
   commentsCount: number;
   likesCount: number;
+  bio: string;
 }
 
 export default function ProfileAside({
   postsCount,
   commentsCount,
   likesCount,
+  bio,
 }: AsideProps) {
   const { data: session }: any = useSession({ required: true });
 
@@ -39,12 +41,11 @@ export default function ProfileAside({
           </div>
         </Link>
       </div>
-      <p className="text-sm my-4">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum, at a
-        blanditiis ipsa cumque aliquam animi optio repellat consequuntur velit,
-        placeat, nesciunt saepe nostrum vero reprehenderit veritatis adipisci
-        numquam aperiam?
-      </p>
+      {bio ? (
+        <p className="text-sm my-4">{bio}</p>
+      ) : (
+        <p className="text-sm my-4">No biography yet.</p>
+      )}
       <div className="flex justify-around gap-10">
         <div>
           <p className="text-sm font-medium">Posts</p>
