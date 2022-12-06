@@ -22,7 +22,7 @@ export default function ProfileAside({
   const router = useRouter();
 
   return (
-    <div className="bg-white max-w-xs p-10 rounded-xl fixed">
+    <div className="bg-white max-w-xs p-10 rounded-xl fixed shadow">
       <div className="flex">
         {session?.user?.image && (
           <Image

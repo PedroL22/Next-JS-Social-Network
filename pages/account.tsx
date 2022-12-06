@@ -8,13 +8,13 @@ import { prisma } from "../lib/prisma";
 import { GetServerSideProps } from "next";
 import Post from "../components/Post";
 
-export default function Account({ posts }: any) {
+export default function Account({ posts, aside }: any) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data: session }: any = useSession({ required: true });
 
   if (session) {
     return (
-      <div>
+      <div className="bg-gray-200 min-h-screen">
         <Head>
           <title>{session.user.name} - Next JS Social Network</title>
           <meta
@@ -24,29 +24,48 @@ export default function Account({ posts }: any) {
           <link rel="icon" href="/favicon.png" />
         </Head>
 
-        <div className="xl:flex block xl:max-w-7xl xl:mx-auto">
-          <div className="xl:pt-36 pt-20 xl:ml-5 xl:flex block">
-            <Image
-              src={session.user.image}
-              alt="user profile picture"
-              width={100}
-              height={100}
-              className="w-36 h-36 xl:mx-0 mx-auto rounded-lg"
-            />
-            <div>
-              <h1 className="xl:ml-10 mt-2 text-center font-medium text-3xl text-gray-600">
-                {session.user.name}
-              </h1>
-              <p className="xl:ml-10 text-center text-gray-400">
-                {session.user.email}
-              </p>
-              <Link href="/">
-                <button className="flex mt-2 mx-auto xl:ml-24 text-white bg-blue-700 rounded-md px-5 py-2 hover:bg-blue-800 active:bg-blue-900 transition-all ease-in duration-75">
-                  Back
-                </button>
-              </Link>
+        <div className="md:flex md:max-w-7xl md:mx-auto md:justify-around xl:flex xl:max-w-7xl xl:mx-auto xl:justify-around block ">
+          <div className="md:flex xl:flex pt-20">
+            <div className="bg-white max-w-xs p-10 rounded-xl shadow mx-auto md:mt-4 xl:mt-4 h-fit">
+              <div className="flex">
+                {session?.user?.image && (
+                  <Image
+                    src={session?.user?.image}
+                    alt={session?.user?.name + " profile picture"}
+                    className="rounded-full cursor-pointer mr-2"
+                    width={65}
+                    height={65}
+                  />
+                )}
+
+                <div className="mt-3">
+                  <p className="font-medium">{session?.user?.name}</p>
+                  <p className="text-sm text-gray-500">
+                    {session?.user?.email}
+                  </p>
+                </div>
+              </div>
+              {aside.bio ? (
+                <p className="text-sm my-4">{aside.bio}</p>
+              ) : (
+                <p className="text-sm my-4">No biography yet.</p>
+              )}
+              <div className="flex justify-around gap-10">
+                <div>
+                  <p className="text-sm font-medium">Posts</p>
+                  <p className="text-sm text-center">{aside._count.posts}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Comments</p>
+                  <p className="text-sm text-center">{aside._count.Comments}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Likes</p>
+                  <p className="text-sm text-center">{aside._count.Likes}</p>
+                </div>
+              </div>
             </div>
-            <div>
+            <div className="">
               {posts
                 .filter((item: any) =>
                   item.ownerEmail.includes(session.user.email)
@@ -98,6 +117,18 @@ export default function Account({ posts }: any) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
 
+  const aside = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email as string,
+    },
+    select: {
+      bio: true,
+      _count: {
+        select: { posts: true, Comments: true, Likes: true },
+      },
+    },
+  });
+
   const posts = await prisma.posts.findMany({
     include: {
       User: true,
@@ -135,6 +166,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       posts: JSON.parse(JSON.stringify(data)),
+      aside: aside,
     },
   };
 };
