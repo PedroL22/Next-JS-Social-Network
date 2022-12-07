@@ -211,7 +211,7 @@ export default function Account({ posts, aside }: any) {
                       onClick={editProfile}
                       className="mt-4 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
                     >
-                      Edit
+                      Save
                     </button>
                     <button
                       onClick={() => setIsEditing(false)}
