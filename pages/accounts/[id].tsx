@@ -28,7 +28,7 @@ export default function Details({ data }: any) {
           <title>{data?.user?.name} - Next JS Social Network</title>
           <meta
             name="description"
-            content="A news website made with The Guardian API, Next JS, and Tailwind CSS based on Globo's G1."
+            content={`${data?.user?.name} - Next JS Social Network`}
           />
           <link rel="icon" href="/favicon.png" />
         </Head>

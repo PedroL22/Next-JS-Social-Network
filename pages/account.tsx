@@ -56,7 +56,7 @@ export default function Account({ posts, aside }: any) {
           <title>{session.user.name} - Next JS Social Network</title>
           <meta
             name="description"
-            content="A news website made with The Guardian API, Next JS, and Tailwind CSS based on Globo's G1."
+            content="A Next JS social network prototype built with Tailwind CSS, Daisy UI and Prisma."
           />
           <link rel="icon" href="/favicon.png" />
         </Head>
