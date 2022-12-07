@@ -54,7 +54,9 @@ export default function Details({ data }: any) {
                       : data?.user?.name}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-200">
-                    {data?.user?.email}
+                    {data?.user?.email.length > 22
+                      ? data?.user?.email.substring(0, 22) + "..."
+                      : data?.user?.email}
                   </p>
                 </div>
               </div>

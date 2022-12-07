@@ -124,7 +124,7 @@ export default function Post({
 
   return (
     <div className="flex px-4">
-      <div className="mx-auto bg-white dark:bg-gray-700 h-auto w-96 my-4 rounded-md shadow-md p-5">
+      <div className="mx-auto bg-white dark:bg-gray-700 h-auto w-80 my-4 rounded-md shadow-md p-5">
         <div className="justify-between">
           <div className="flex">
             <Image
@@ -148,7 +148,7 @@ export default function Post({
             {ownerEmail === session?.user?.email ? (
               <div className="flex -ml-6">
                 <MdModeEditOutline
-                  className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                  className="cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
                   onClick={() => setIsEditingPost(true)}
                 />
                 <BsFillTrashFill
@@ -159,7 +159,7 @@ export default function Post({
             ) : session?.user?.isAdmin === true ? (
               <div className="flex -ml-6">
                 <MdModeEditOutline
-                  className="xl:ml-10 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                  className="cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
                   onClick={() => setIsEditingPost(true)}
                 />
                 <BsFillTrashFill
@@ -200,7 +200,7 @@ export default function Post({
             </div>
           </form>
         )}
-        <div className="flex justify-around">
+        <div className="flex justify-around gap-5">
           {likesData
             .map((i: any) => i.userId)
             .includes(session?.user?.email) ? (
@@ -346,16 +346,16 @@ export default function Post({
                       </p>
                     </div>
                     {comment.email === session?.user?.email ? (
-                      <div className="flex xl:ml-10">
+                      <div className="flex">
                         <BsFillTrashFill
-                          className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                          className="-ml-3 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
                           onClick={handleDeleteComment}
                         />
                       </div>
                     ) : session?.user?.isAdmin === true ? (
-                      <div className="flex xl:ml-10">
+                      <div className="flex">
                         <BsFillTrashFill
-                          className="ml-2 mr-2 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
+                          className="-ml-3 cursor-pointer text-gray-400 hover:text-gray-500 transition-all duration-250 ease-in"
                           onClick={handleDeleteComment}
                         />
                       </div>

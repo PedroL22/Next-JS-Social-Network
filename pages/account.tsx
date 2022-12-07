@@ -84,7 +84,9 @@ export default function Account({ posts, aside }: any) {
                           : session?.user?.name}
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-200">
-                        {session?.user?.email}
+                        {session?.user?.email.length > 22
+                          ? session?.user?.email.substring(0, 22) + "..."
+                          : session?.user?.email}
                       </p>
                     </div>
                   </div>

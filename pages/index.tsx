@@ -66,7 +66,7 @@ export default function Home({ posts, aside }: any) {
                   <textarea
                     value={newPost}
                     onChange={(e) => setNewPost(e.target.value)}
-                    className="bg-white dark:bg-gray-700 dark:text-white h-[15vh] xl:h-32 w-96 mx-auto xl:w-96 py-2 px-3 rounded-xl outline-none border dark:border-none focus:border-gray-400 resize-none"
+                    className="bg-white dark:bg-gray-700 dark:text-white h-[15vh] xl:h-32 w-80 mx-auto py-2 px-3 rounded-xl outline-none border dark:border-none focus:border-gray-400 resize-none"
                     placeholder="Post something..."
                   />
                   <button

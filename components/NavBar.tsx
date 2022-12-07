@@ -10,7 +10,7 @@ export default function NavBar() {
       <nav className="fixed h-16 bg-blue-700 w-screen">
         <div className="flex mx-auto max-w-7xl justify-between p-5 w-screen">
           <Link href="/">
-            <h1 className="text-white font-medium cursor-pointer hover:text-gray-200 transition-all ease-in duration-75">
+            <h1 className="text-white font-medium cursor-pointer whitespace-nowrap hover:text-gray-200 transition-all ease-in duration-75">
               Next JS Social Network
             </h1>
           </Link>
