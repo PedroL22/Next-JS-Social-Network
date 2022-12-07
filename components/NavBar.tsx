@@ -32,7 +32,7 @@ export default function NavBar() {
               >
                 <li>
                   <Link href="/account" className="justify-between">
-                    {session.user.name}
+                    Profile
                   </Link>
                 </li>
 
