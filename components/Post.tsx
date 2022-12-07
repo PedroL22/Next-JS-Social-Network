@@ -278,7 +278,7 @@ export default function Post({
           ) : (
             <div
               onClick={() => setIsCommenting(false)}
-              className="flex bg-gray-200 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
+              className="flex bg-gray-200 dark:bg-gray-500 w-full px-3 py-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition-all duration-250 ease-in"
             >
               <BiCommentDetail className="text-black dark:text-white" />
               <p className="font-medium -mt-1 ml-1 text-black dark:text-white">
@@ -288,19 +288,19 @@ export default function Post({
           )}
         </div>
         {isCommenting === true ? (
-          <form onSubmit={handleCreateComment} className="flex mx-auto">
+          <form onSubmit={handleCreateComment} className="flex mx-auto mt-5">
             <input
               type="text"
               value={commentTextState}
               onChange={(e: any) => setCommentTextState(e.target.value)}
-              className="bg-gray-white pl-4 xl:pr-24 pr-12 pt-4 pb-10 rounded-md outline-0 border focus:border-gray-400"
+              className="bg-gray-200 dark:bg-gray-600 dark:text-white rounded-md pl-4 w-full outline-none border dark:border-none focus:border-gray-400"
               placeholder="Comment something..."
             />
             <button
               type="submit"
-              className="my-2 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+              className="bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-3 ml-2 rounded-md transition-all duration-250 ease-in"
             >
-              <IoMdSend className="text-gray-white hover:text-gray-200 transition-all duration-250 ease-in" />
+              <IoMdSend className="text-white hover:text-gray-200 transition-all duration-250 ease-in" />
             </button>
           </form>
         ) : null}
