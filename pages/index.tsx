@@ -49,7 +49,7 @@ export default function Home({ posts, aside }: any) {
           name="description"
           content="A Next JS social network prototype built with Tailwind CSS, Daisy UI and Prisma."
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <div className="bg-gray-200 dark:bg-gray-800 min-h-screen flex">
