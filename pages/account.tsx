@@ -43,10 +43,18 @@ export default function Account({ posts, aside }: any) {
     } catch (e) {
       console.error(e);
     } finally {
-      bio !== "" ? setIsEditing(false) : null;
-      notify("Profile update successfully.");
+      name === ""
+        ? null
+        : bio === ""
+        ? null
+        : notify("Profile update successfully.");
       refreshData();
     }
+  };
+
+  const cancel = () => {
+    setIsEditing(false);
+    refreshData();
   };
 
   if (session) {
@@ -214,7 +222,7 @@ export default function Account({ posts, aside }: any) {
                       Save
                     </button>
                     <button
-                      onClick={() => setIsEditing(false)}
+                      onClick={cancel}
                       className="mt-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
                     >
                       Cancel
