@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import ProfileAside from "../components/ProfileAside";
 
 export default function Home({ posts, aside }: any) {
-  const { data: session }: any = useSession({ required: true });
+  const { data: session }: any = useSession({ required: false });
   const [newPost, setNewPost] = useState("");
 
   const router = useRouter();
@@ -56,29 +56,53 @@ export default function Home({ posts, aside }: any) {
         <main className="pt-20 mx-auto max-w-7xl">
           <div className="flex md:gap-80 lg:gap-96 xl:gap-96 md:justify-around lg:justify-around xl:justify-around">
             <div className="hidden md:flex lg:flex xl:flex">
-              <ProfileAside
-                postsCount={aside?._count.posts}
-                commentsCount={aside?._count.Comments}
-                likesCount={aside?._count.Likes}
-                bio={aside?.bio}
-              />
+              {session ? (
+                <ProfileAside
+                  postsCount={aside?._count.posts}
+                  commentsCount={aside?._count.Comments}
+                  likesCount={aside?._count.Likes}
+                  bio={aside?.bio}
+                />
+              ) : (
+                <ProfileAside
+                  postsCount={0}
+                  commentsCount={0}
+                  likesCount={0}
+                  bio={"You don't have an account yet."}
+                />
+              )}
             </div>
             <div>
               <div className="flex px-4">
-                <form onSubmit={handleCreatePost} className="mx-auto">
-                  <textarea
-                    value={newPost}
-                    onChange={(e) => setNewPost(e.target.value)}
-                    className="bg-white dark:bg-gray-700 dark:text-white h-[15vh] xl:h-32 w-80 mx-auto py-2 px-3 rounded-xl outline-none border dark:border-none focus:border-gray-400 resize-none"
-                    placeholder="Post something..."
-                  />
-                  <button
-                    type="submit"
-                    className="block my-2 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
-                  >
-                    Post
-                  </button>
-                </form>
+                {session ? (
+                  <form onSubmit={handleCreatePost} className="mx-auto">
+                    <textarea
+                      value={newPost}
+                      onChange={(e) => setNewPost(e.target.value)}
+                      className="bg-white dark:bg-gray-700 dark:text-white h-[15vh] xl:h-32 w-80 mx-auto py-2 px-3 rounded-xl outline-none border dark:border-none focus:border-gray-400 resize-none"
+                      placeholder="Post something..."
+                    />
+                    <button
+                      type="submit"
+                      className="block my-2 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+                    >
+                      Post
+                    </button>
+                  </form>
+                ) : (
+                  <form className="mx-auto">
+                    <textarea
+                      className="bg-white dark:bg-gray-700 dark:text-white h-[15vh] xl:h-32 w-80 mx-auto py-2 px-3 rounded-xl outline-none border dark:border-none focus:border-gray-400 resize-none"
+                      placeholder="You need to login first"
+                    />
+                    <button
+                      type="button"
+                      className="block my-2 bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white px-5 py-2 rounded-md transition-all duration-250 ease-in"
+                    >
+                      Post
+                    </button>
+                  </form>
+                )}
               </div>
               <div>
                 {posts

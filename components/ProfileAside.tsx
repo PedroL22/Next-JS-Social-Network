@@ -17,7 +17,7 @@ export default function ProfileAside({
   likesCount,
   bio,
 }: AsideProps) {
-  const { data: session }: any = useSession({ required: true });
+  const { data: session }: any = useSession();
 
   const router = useRouter();
 

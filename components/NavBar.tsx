@@ -55,7 +55,7 @@ export default function NavBar() {
             </h1>
           </Link>
           <button
-            onClick={() => signIn}
+            onClick={signIn as any}
             className="text-white font-medium cursor-pointer hover:text-gray-200 transition-all ease-in duration-75"
           >
             Login

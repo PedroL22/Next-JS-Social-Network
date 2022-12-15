@@ -24,7 +24,7 @@ export default function Post({
   likesCount,
   likesData,
 }: any) {
-  const { data: session }: any = useSession({ required: true });
+  const { data: session }: any = useSession();
   const postDate = moment(date).format("MMMM Do YYYY, h:mm a");
   const [postText, setPostText] = useState("");
   const [commentTextState, setCommentTextState] = useState("");
@@ -97,10 +97,12 @@ export default function Post({
 
   async function handleCreateLike() {
     try {
-      await api.post("/api/likes/create", {
-        postsId: id,
-        userId: session?.user?.email,
-      });
+      session
+        ? await api.post("/api/likes/create", {
+            postsId: id,
+            userId: session?.user?.email,
+          })
+        : null;
     } catch (e) {
       console.error(e);
     } finally {
@@ -238,7 +240,7 @@ export default function Post({
           ) : (
             <div
               onClick={handleCreateLike}
-              className="flex bg-gray-200 dark:bg-gray-500 w-full px-3 py-2 rounded-md hover:bg-gray-300 cursor-pointer transition-all duration-250 ease-in"
+              className="flex bg-gray-200 dark:bg-gray-500 w-full px-3 py-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition-all duration-250 ease-in"
             >
               <AiFillLike className="text-black dark:text-white" />
 
@@ -265,7 +267,7 @@ export default function Post({
               )}
             </div>
           )}
-          {isCommenting === false ? (
+          {isCommenting === false && session ? (
             <div
               onClick={() => setIsCommenting(true)}
               className="flex bg-gray-200 dark:bg-gray-500 w-full px-3 py-2 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition-all duration-250 ease-in"
