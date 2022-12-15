@@ -48,8 +48,8 @@ export default function Details({ data }: any) {
 
               <div className="mt-3">
                 <p className="font-medium text-black dark:text-white">
-                  {data?.user?.name.length > 20
-                    ? data?.user?.name.substring(0, 20) + "..."
+                  {data?.user?.name.length > 18
+                    ? data?.user?.name.substring(0, 18) + "..."
                     : data?.user?.name}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-200">

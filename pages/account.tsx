@@ -49,6 +49,7 @@ export default function Account({ posts, aside }: any) {
         ? null
         : notify("Profile update successfully.");
       refreshData();
+      setIsEditing(false);
     }
   };
 
@@ -61,7 +62,12 @@ export default function Account({ posts, aside }: any) {
     return (
       <div className="bg-gray-200 dark:bg-gray-800 min-h-screen">
         <Head>
-          <title>{session.user.name} - Next JS Social Network</title>
+          <title>
+            {session?.user?.name.length > 18
+              ? session?.user?.name.substring(0, 18) + "..."
+              : session?.user?.name}
+            - Next JS Social Network
+          </title>
           <meta
             name="description"
             content="A Next JS social network prototype built with Tailwind CSS, Daisy UI and Prisma."
@@ -87,8 +93,8 @@ export default function Account({ posts, aside }: any) {
 
                     <div className="mt-3">
                       <p className="font-medium text-black dark:text-white">
-                        {session?.user?.name.length > 20
-                          ? session?.user?.name.substring(0, 20) + "..."
+                        {session?.user?.name.length > 18
+                          ? session?.user?.name.substring(0, 18) + "..."
                           : session?.user?.name}
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-200">

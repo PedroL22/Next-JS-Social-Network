@@ -140,7 +140,9 @@ export default function Post({
             <div>
               <Link href={"accounts/" + ownerId}>
                 <h2 className="ml-3 font-medium text-black dark:text-white">
-                  {ownerName}
+                  {ownerName.length > 16
+                    ? ownerName.substring(0, 16) + "..."
+                    : ownerName}
                 </h2>
               </Link>
               <p className="ml-3 text-gray-500 dark:text-gray-200 whitespace-nowrap text-sm">
@@ -174,7 +176,9 @@ export default function Post({
         </div>
 
         {isEditingPost === false ? (
-          <h1 className="my-5 text-black dark:text-white">{text}</h1>
+          <h1 className="my-5 text-black dark:text-white">
+            {text.length > 750 ? text.substring(0, 750) + "..." : text}
+          </h1>
         ) : (
           <form onSubmit={handleEditPost} className="mx-auto">
             <input
@@ -339,7 +343,9 @@ export default function Post({
                           router.push("accounts/" + comment?.User?.id)
                         }
                       >
-                        {comment?.User?.name}
+                        {comment?.User?.name.length > 16
+                          ? comment?.User?.name.substring(0, 16) + "..."
+                          : comment?.User?.name}
                       </h4>
                       <p className="ml-3 text-gray-500 dark:text-gray-200 whitespace-nowrap text-sm">
                         {moment(comment?.createdAt?.toString()).format(
@@ -365,7 +371,11 @@ export default function Post({
                   </div>
                 </div>
 
-                <h3 className="text-black dark:text-white">{comment.text}</h3>
+                <h3 className="text-black dark:text-white">
+                  {comment.text.length > 750
+                    ? comment.text.substring(0, 750) + "..."
+                    : comment.text}
+                </h3>
               </div>
             );
           })}

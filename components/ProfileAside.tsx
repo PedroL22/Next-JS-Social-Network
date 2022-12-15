@@ -37,8 +37,8 @@ export default function ProfileAside({
         <Link href="/account">
           <div className="mt-3">
             <p className="font-medium text-black dark:text-white">
-              {session?.user?.name.length > 20
-                ? session?.user?.name.substring(0, 20) + "..."
+              {session?.user?.name.length > 18
+                ? session?.user?.name.substring(0, 18) + "..."
                 : session?.user?.name}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-200">
