@@ -47,12 +47,12 @@ export default function Details({ data }: any) {
               )}
 
               <div className="mt-3">
-                <p className="font-medium text-black dark:text-white">
+                <p className="font-medium text-black dark:text-white whitespace-nowrap">
                   {data?.user?.name.length > 18
                     ? data?.user?.name.substring(0, 18) + "..."
                     : data?.user?.name}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-200">
+                <p className="text-sm text-gray-500 dark:text-gray-200 whitespace-nowrap">
                   {data?.user?.email.length > 22
                     ? data?.user?.email.substring(0, 22) + "..."
                     : data?.user?.email}

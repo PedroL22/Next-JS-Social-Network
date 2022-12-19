@@ -92,12 +92,12 @@ export default function Account({ posts, aside }: any) {
                     )}
 
                     <div className="mt-3">
-                      <p className="font-medium text-black dark:text-white">
+                      <p className="font-medium text-black dark:text-white whitespace-nowrap">
                         {session?.user?.name.length > 18
                           ? session?.user?.name.substring(0, 18) + "..."
                           : session?.user?.name}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-200">
+                      <p className="text-sm text-gray-500 dark:text-gray-200 whitespace-nowrap">
                         {session?.user?.email.length > 22
                           ? session?.user?.email.substring(0, 22) + "..."
                           : session?.user?.email}
