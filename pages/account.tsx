@@ -63,9 +63,9 @@ export default function Account({ posts, aside }: any) {
       <div className="bg-gray-200 dark:bg-gray-800 min-h-screen">
         <Head>
           <title>
-            {session?.user?.name.length > 18
-              ? session?.user?.name.substring(0, 18) + "..."
-              : session?.user?.name}
+            {session?.user?.name.length > 25
+              ? session?.user?.name.substring(0, 25) + "..."
+              : session?.user?.name}{" "}
             - Next JS Social Network
           </title>
           <meta

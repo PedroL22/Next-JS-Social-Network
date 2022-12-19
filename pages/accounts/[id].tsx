@@ -24,7 +24,12 @@ export default function Details({ data }: any) {
   return (
     <div className="bg-gray-200 dark:bg-gray-800 min-h-screen">
       <Head>
-        <title>{data?.user?.name} - Next JS Social Network</title>
+        <title>
+          {data?.user?.name.length > 25
+            ? data?.user?.name.substring(0, 25) + "... "
+            : data?.user?.name}{" "}
+          - Next JS Social Network
+        </title>
         <meta
           name="description"
           content={`${data?.user?.name} - Next JS Social Network`}
