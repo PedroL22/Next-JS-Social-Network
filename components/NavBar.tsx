@@ -1,37 +1,43 @@
-import Link from "next/link";
-import Image from "next/image";
-import { useSession, signIn, signOut } from "next-auth/react";
+import Link from 'next/link'
+import Image from 'next/image'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 export default function NavBar() {
-  const { data: session }: any = useSession();
+  const { data: session }: any = useSession()
 
   if (session) {
     return (
-      <nav className="fixed h-16 bg-blue-700 w-screen">
-        <div className="flex mx-auto max-w-7xl justify-between p-5 w-screen">
-          <Link href="/">
-            <h1 className="text-white font-medium cursor-pointer whitespace-nowrap hover:text-gray-200 transition-all ease-in duration-75">
+      <nav className='fixed h-16 w-screen bg-blue-700'>
+        <div className='mx-auto flex w-screen max-w-7xl justify-between p-5'>
+          <Link href='/'>
+            <h1 className='cursor-pointer whitespace-nowrap font-medium text-white transition-all duration-75 ease-in hover:text-gray-200'>
               Next JS Social Network
             </h1>
           </Link>
-          <div className="flex">
-            <div className="dropdown dropdown-end -mt-3">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                <div className="rounded-full">
+          <div className='flex'>
+            <div className='dropdown-end dropdown -mt-3'>
+              <label
+                tabIndex={0}
+                className='btn-ghost btn-circle avatar btn'
+              >
+                <div className='rounded-full'>
                   <Image
                     src={session.user.image}
                     width={48}
                     height={48}
-                    alt="profile picture"
+                    alt='profile picture'
                   />
                 </div>
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+                className='menu-compact dropdown-content menu rounded-box mt-3 w-52 bg-base-100 p-2 shadow'
               >
                 <li>
-                  <Link href="/account" className="justify-between">
+                  <Link
+                    href='/account'
+                    className='justify-between'
+                  >
                     Profile
                   </Link>
                 </li>
@@ -44,24 +50,24 @@ export default function NavBar() {
           </div>
         </div>
       </nav>
-    );
+    )
   } else {
     return (
-      <nav className="fixed h-16 bg-blue-700 mb-10 w-screen">
-        <div className="flex mx-auto max-w-7xl justify-between p-5 w-screen">
-          <Link href="/">
-            <h1 className="text-white font-medium cursor-pointer hover:text-gray-200 transition-all ease-in duration-75">
+      <nav className='fixed mb-10 h-16 w-screen bg-blue-700'>
+        <div className='mx-auto flex w-screen max-w-7xl justify-between p-5'>
+          <Link href='/'>
+            <h1 className='cursor-pointer font-medium text-white transition-all duration-75 ease-in hover:text-gray-200'>
               Next JS Social Network
             </h1>
           </Link>
           <button
             onClick={signIn as any}
-            className="text-white font-medium cursor-pointer hover:text-gray-200 transition-all ease-in duration-75"
+            className='cursor-pointer font-medium text-white transition-all duration-75 ease-in hover:text-gray-200'
           >
             Login
           </button>
         </div>
       </nav>
-    );
+    )
   }
 }

@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../lib/prisma";
+import { NextApiRequest, NextApiResponse } from 'next'
+import { prisma } from '../../../lib/prisma'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { id }: any = req.query;
+  const { id }: any = req.query
 
   const user = await prisma.user.findUnique({
     where: {
@@ -38,7 +38,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         },
       },
     },
-  });
+  })
 
-  return res.status(201).json({ user });
+  return res.status(201).json({ user })
 }

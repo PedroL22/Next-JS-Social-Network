@@ -9,11 +9,11 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "localhost",
-      "lh3.googleusercontent.com",
-      "avatars.githubusercontent.com",
+      'localhost',
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com',
     ],
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
